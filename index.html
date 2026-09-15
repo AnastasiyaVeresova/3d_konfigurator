@@ -4,115 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>3D Конфигуратор Диванов</title>
-<style>
-  body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-  #ui-panel {
-    position: absolute; top: 10px; left: 10px; z-index: 10;
-    background: rgba(255,255,255,0.95); padding: 20px; border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    max-width: 280px;
-     max-height: 90vh; /* Панель не выше 90% высоты экрана */
-  overflow-y: auto; /* Вертикальный скролл, если контент не влезает */
-  }
-  #ui-panel h3 { margin-top: 0; margin-bottom: 15px; color: #333; }
-  #ui-panel button, #ui-panel input[type="color"], #ui-panel select {
-    margin: 8px 0; width: 100%; padding: 10px; box-sizing: border-box; cursor: pointer;
-    border: 1px solid #ddd; border-radius: 6px; background: #fff;
-  }
-  #ui-panel button { background: #f0f0f0; color: #333; transition: 0.2s; }
-  #ui-panel button:hover { background: #e0e0e0; }
-  #ui-panel .btn-action { background: #007bff; color: white; }
-  #ui-panel .btn-action:hover { background: #0056b3; }
+    <link rel="stylesheet" href="css/style.css">
 
-  #ui-panel .btn-row {
-    display: flex; gap: 8px;
-  }
-  #ui-panel .btn-row button { margin: 0; flex: 1; }
-
-  #object-controls {
-    display: none;
-    position: absolute; top: 10px; right: 10px; z-index: 20;
-    background: rgba(255,255,255,0.95); padding: 20px; border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    max-width: 280px;
-  }
-  #object-controls h3, #object-controls h4 {
-    margin-top: 0; margin-bottom: 15px; color: #333;
-  }
-  #object-controls button,
-  #object-controls input[type="color"],
-  #object-controls select,
-  #object-controls input[type="range"] {
-    margin: 8px 0; width: 100%; padding: 10px; box-sizing: border-box;
-    cursor: pointer; border: 1px solid #ddd; border-radius: 6px; background: #fff;
-  }
-  #object-controls button {
-    background: #f0f0f0; color: #333; transition: 0.2s;
-  }
-  #object-controls button:hover { background: #e0e0e0; }
-  #object-controls label {
-    font-size: 12px; color: #666; display: block; margin-bottom: 4px;
-  }
-  #object-controls .btn-row {
-    display: flex; gap: 8px;
-  }
-  #object-controls .btn-row button { margin: 0; flex: 1; }
-  #object-controls hr {
-    margin: 15px 0; border: 0; border-top: 1px solid #ccc;
-  }
-  #delete-object {
-    background: #96C22B !important; color: white !important;
-    font-weight: bold;
-  }
-  #delete-object:hover { background: #7da820 !important; }
-
-  /* Зелёные ползунки */
-  #object-controls input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 5px;
-    border-radius: 4px;
-    background: #96C22B;
-    outline: none;
-    padding: 0;
-  }
-  #object-controls input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: #96C22B;
-    border: 3px solid #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    cursor: pointer;
-  }
-  #object-controls input[type="range"]::-moz-range-thumb {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: #96C22B;
-    border: 3px solid #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    cursor: pointer;
-  }
-  #object-controls input[type="range"]::-moz-range-track {
-    height: 5px; border-radius: 4px; background: #96C22B;
-  }
-
-  /* Кнопки истории */
-  #undo-action, #redo-action {
-    background: #f0f0f0; color: #333; transition: 0.2s; font-weight: bold;
-  }
-  #undo-action:hover { background: #ffcccc; color: #cc0000; }
-  #redo-action:hover { background: #ccffcc; color: #006600; }
-  .disabled-btn {
-    opacity: 0.5; cursor: not-allowed; pointer-events: none;
-  }
-</style>
 </head>
 <body>
 
-<div id="ui-panel">
+<!-- <div id="ui-panel">
   <h3>Добавить секцию</h3>
   <button id="add-straight">Прямая секция</button>
   <button id="add-corner">Угловая секция</button>
@@ -144,6 +42,10 @@
      src=""
      alt="превью"
      style="display:none; width:100%; margin-top:8px; border-radius:6px; border:1px solid #ddd;" />
+
+     <h3>Размеры</h3>
+<button id="toggle-dimensions">Показать размеры</button>
+
 
 
   <h3>История действий</h3>
@@ -178,7 +80,175 @@
 <h3>Экспорт сцены</h3>
 <button id="export-model">Экспортировать сцену (.gltf)</button>
 <button id="export-png">Экспорт PNG (прозрачный фон)</button>
+</div> -->
+
+<div id="ui-panel">
+<h3>Секции, размеры и история</h3>
+<div class="icon-row">
+  <button class="icon-btn" id="add-straight" data-tooltip="Прямая секция">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="14" width="28" height="16" rx="3"/>
+      <line x1="10" y1="14" x2="38" y2="14" stroke-width="4"/>
+      <circle cx="15" cy="34" r="2.5" fill="#888" stroke="none"/>
+      <circle cx="33" cy="34" r="2.5" fill="#888" stroke="none"/>
+    </svg>
+  </button>
+  <button class="icon-btn" id="add-corner" data-tooltip="Угловая секция">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 30 L10 14 L30 14 L30 30 L38 30 L38 38 L10 38 Z"/>
+      <line x1="10" y1="14" x2="30" y2="14" stroke-width="4"/>
+      <line x1="30" y1="30" x2="38" y2="30" stroke-width="4"/>
+      <circle cx="14" cy="36" r="2.5" fill="#888" stroke="none"/>
+      <circle cx="35" cy="36" r="2.5" fill="#888" stroke="none"/>
+    </svg>
+  </button>
+  <button class="toggle-icon" id="toggle-dimensions" data-tooltip="Показать размеры">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="8" y1="36" x2="40" y2="36"/>
+      <line x1="8" y1="32" x2="8" y2="40"/>
+      <line x1="40" y1="32" x2="40" y2="40"/>
+      <line x1="8" y1="12" x2="8" y2="36"/>
+      <line x1="4" y1="12" x2="12" y2="12"/>
+      <line x1="4" y1="36" x2="12" y2="36"/>
+      <text x="22" y="30" font-size="9" fill="#888" stroke="none">↔</text>
+    </svg>
+  </button>
+  <button class="icon-btn" id="undo-action" data-tooltip="Отменить (Ctrl+Z)">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 20 L8 26 L14 32"/>
+      <path d="M8 26 L28 26 Q38 26 38 36 L38 38"/>
+    </svg>
+  </button>
+  <button class="icon-btn" id="redo-action" data-tooltip="Повторить (Ctrl+Y)">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M34 20 L40 26 L34 32"/>
+      <path d="M40 26 L20 26 Q10 26 10 36 L10 38"/>
+    </svg>
+  </button>
 </div>
+
+
+
+  <h3>Цвет каркаса</h3>
+  <div class="icon-row">
+    <div class="color-picker-wrap" data-tooltip="Подбор цвета">
+      <input type="color" id="frame-color" value="#888888" />
+    </div>
+    <div class="color-circle" id="frame-color-black"
+         style="background:#1a1a1a;"
+         data-tooltip="Чёрный"></div>
+    <div class="color-circle" id="frame-color-gray"
+         style="background:#888888;"
+         data-tooltip="Серый"></div>
+  </div>
+
+<h3>Обивка</h3>
+<div style="display: flex; gap: 8px; align-items: center;">
+  <div class="upholstery-row" style="flex: 1;">
+    <div class="color-picker-wrap" data-tooltip="Подбор цвета">
+      <input type="color" id="upholstery-color" value="#ffffff" />
+    </div>
+    <div class="select-wrap">
+      <select id="upholstery-category">
+        <option value="none">Без текстуры</option>
+        <option value="santorini">Экокожа Santorini</option>
+        <option value="moderno">Ткань Moderno</option>
+        <option value="velutto">Ткань Velutto</option>
+        <option value="velton">Ткань Велтон</option>
+        <option value="umbra">Ткань Умбра</option>
+      </select>
+      <span class="select-arrow">▼</span>
+    </div>
+  </div>
+  <button class="icon-btn" id="reset-upholstery" data-tooltip="К исходному" style="flex-shrink: 0;">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M36 24 A12 12 0 1 1 24 12"/>
+      <path d="M24 6 L24 14 L32 10"/>
+    </svg>
+  </button>
+</div>
+
+<div class="variant-grid" id="variant-grid"></div>
+
+
+
+
+<h3>Фон сцены, экспорт</h3>
+<div class="icon-label-row">
+  <button class="icon-label-btn" id="bg-upload-btn" data-tooltip="Добавить">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 32 L24 14"/>
+      <path d="M16 22 L24 14 L32 22"/>
+      <path d="M10 34 L10 40 L38 40 L38 34"/>
+    </svg>
+    <!-- <span>Загрузить</span> -->
+  </button>
+  <button class="icon-label-btn" id="bg-reset-btn" data-tooltip="Сбросить">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 18 L20 12 L26 18"/>
+      <path d="M20 12 L20 30 Q20 38 28 38 L34 38"/>
+      <path d="M30 32 L34 38 L30 44"/>
+    </svg>
+    <!-- <span>Сбросить</span> -->
+  </button>
+  <button class="icon-label-btn" id="toggle-floor" data-tooltip="Скрыть/показать пол">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="8" y="30" width="32" height="10" rx="2"/>
+      <line x1="14" y1="30" x2="14" y2="40"/>
+      <line x1="20" y1="30" x2="20" y2="40"/>
+      <line x1="28" y1="30" x2="28" y2="40"/>
+      <line x1="34" y1="30" x2="34" y2="40"/>
+    </svg>
+    <!-- <span>Пол</span> -->
+  </button>
+<div class="icon-row">
+  <button class="icon-btn" id="export-model" data-tooltip="Экспорт сцены (.gltf)">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 8 L24 30"/>
+      <path d="M16 22 L24 30 L32 22"/>
+      <path d="M10 36 L10 40 L38 40 L38 36"/>
+    </svg>
+  </button>
+  <button class="icon-btn" id="export-png" data-tooltip="Экспорт PNG">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="10" width="28" height="28" rx="3"/>
+      <circle cx="18" cy="18" r="3"/>
+      <path d="M10 30 L18 24 L24 30 L30 22 L38 32 L38 36 L10 36 Z"/>
+    </svg>
+  </button>
+</div>
+</div>
+<input type="file" id="bg-file-input" accept="image/*" style="display:none" />
+
+
+<h3 class="collapse-h3" id="bg-settings-trigger">
+  Настройки фона
+  <span class="arrow">▼</span>
+</h3>
+<div class="collapse-content" id="bg-settings-content">
+  <div class="collapse-content-inner">
+    <div class="bg-scale-row">
+      <button id="bg-scale-plus">+</button>
+      <button id="bg-scale-minus">−</button>
+      <input type="range" id="bg-scale-slider" min="0.5" max="3" step="0.1" value="1" style="flex:1;" />
+    </div>
+    <label for="bg-scale-slider" style="font-size:12px;color:#666;margin:6px 0 4px;display:block;">
+      Масштаб: <span id="bg-scale-value">1.0</span>
+    </label>
+    <div class="bg-move-grid">
+      <div class="empty-cell"></div>
+      <button id="bg-move-up">↑</button>
+      <div class="empty-cell"></div>
+      <button id="bg-move-left">←</button>
+      <div class="empty-cell"></div>
+      <button id="bg-move-right">→</button>
+      <div class="empty-cell"></div>
+      <button id="bg-move-down">↓</button>
+      <div class="empty-cell"></div>
+    </div>
+  </div>
+</div>
+<br>
 
 <div id="object-controls">
   <h3>Управление объектом</h3>
@@ -203,30 +273,56 @@
     </div>
   </div>
 
-  <hr />
-
+<br>
   <div>
     <label>Поворот Y</label>
-    <input type="range" id="rotation-y-slider" min="0" max="360" value="0" />
+    <div class="slider-input-row">
+      <input type="range" id="rotation-y-slider" min="0" max="360" value="0" step="1" />
+      <input type="number" id="rotation-y-input" min="0" max="360" value="0" step="1" />
+    </div>
   </div>
 
   <div>
     <label>Позиция Z</label>
-    <input type="range" id="position-y-slider" min="-10" max="10" value="0" step="0.1" />
-  </div>
-
-  <hr />
-
-  <div>
-    <label>Режим трансформации</label>
-    <div class="btn-row">
-      <button id="mode-translate">Перемещение</button>
-      <button id="mode-rotate">Вращение</button>
-      <button id="mode-scale">Масштаб</button>
+    <div class="slider-input-row">
+      <input type="range" id="position-y-slider" min="-10" max="10" value="0" step="0.1" />
+      <input type="number" id="position-y-input" min="-10" max="10" value="0" step="0.1" />
     </div>
   </div>
 
-  <hr />
+<br>
+
+<div>
+  <label>Режим трансформации</label>
+  <div class="icon-row">
+    <button class="icon-btn" id="mode-translate" data-tooltip="Перемещение">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 8 L24 40"/>
+        <path d="M8 24 L40 24"/>
+        <path d="M18 14 L24 8 L30 14"/>
+        <path d="M14 18 L8 24 L14 30"/>
+        <path d="M18 34 L24 40 L30 34"/>
+        <path d="M34 18 L40 24 L34 30"/>
+      </svg>
+    </button>
+    <button class="icon-btn" id="mode-rotate" data-tooltip="Вращение">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M36 24 A12 12 0 1 1 24 12"/>
+        <path d="M24 8 L24 14 L18 11"/>
+        <path d="M36 24 L40 20 L40 28"/>
+      </svg>
+    </button>
+    <!-- <button class="icon-btn" id="mode-scale" data-tooltip="Масштаб">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="10" y="10" width="14" height="14" rx="2"/>
+        <rect x="24" y="24" width="14" height="14" rx="2"/>
+        <path d="M20 20 L28 28"/>
+      </svg>
+    </button> -->
+  </div>
+</div>
+
+
 
   <button id="delete-object">🗑 Удалить</button>
 </div>
@@ -337,6 +433,8 @@ function restoreSnapshot(snapshot) {
     if (obj.userData.upholsteryCategory && obj.userData.upholsteryCategory !== 'none') {
       applyUpholsteryTexture(obj, obj.userData.upholsteryCategory, obj.userData.upholsteryVariant);
     }
+          buildDimensions(obj);
+
   });
 
   deselectObject();
@@ -359,16 +457,38 @@ function hexStringToNumber(hexStr) {
 }
 
 const COLOR_TYPE_RULES = [
-  { type: 'upholstery', colors: [0xFFFFFF, 0x393939] },
+  { type: 'upholstery', colors: [0x696969, 0x232323, 0x242424] },  //0x393939
   { type: 'frame', colors: [0x979797, 0xCACACA] },
 ];
 
 function assignMeshTypes(model) {
+  const colorMap = {};
+
   model.traverse((child) => {
     if (child.isMesh) {
       if (!child.userData) child.userData = {};
       const colorHex = child.material.color.getHex();
       child.userData.originalColor = colorHex;
+      child.userData.hasOriginalTexture = !!child.material.map;
+
+      // Поворачиваем встроенную текстуру
+      if (child.userData.hasOriginalTexture) {
+        const tex = child.material.map;
+        tex.center.set(0.5, 0.5);
+        tex.rotation = THREE.MathUtils.degToRad(0); // угол поворота
+        tex.repeat.set(2, 2);
+        // Смещение текстуры 
+        // tex.offset.x = 0.1;   // сдвиг по горизонтали
+        // tex.offset.y = -0.05;  // сдвиг по вертикали
+        tex.needsUpdate = true;
+      }
+
+      const colorStr = '0x' + colorHex.toString(16).toUpperCase().padStart(6, '0');
+      const meshName = child.name || '(без имени)';
+      const hasTex = child.material.map ? ' [с текстурой]' : '';
+      if (!colorMap[colorStr]) colorMap[colorStr] = { count: 0, meshes: [] };
+      colorMap[colorStr].count++;
+      colorMap[colorStr].meshes.push(meshName + hasTex);
 
       let found = false;
       for (const rule of COLOR_TYPE_RULES) {
@@ -381,14 +501,22 @@ function assignMeshTypes(model) {
       if (!found) child.userData.type = 'undefined';
     }
   });
+
+  const report = {};
+  for (const [color, data] of Object.entries(colorMap)) {
+    report[color] = `${data.count} мешей: ${data.meshes.join(', ')}`;
+  }
+  console.log('🎨 Базовые цвета модели:', report);
 }
+
+
 
 function changeColorByType(model, type, colorHex) {
   let changedCount = 0;
   model.traverse((child) => {
     if (child.isMesh && child.userData && child.userData.type === type) {
       child.material = child.material.clone();
-      if (child.material.map) child.material.map = null;
+      // if (child.material.map) child.material.map = null;
       child.material.color.setHex(colorHex);
       child.material.metalness = 0;
       child.material.roughness = 0.7;
@@ -445,20 +573,20 @@ function selectObject(object) {
   }
 
   // Восстанавливаем категорию и вариант текстуры
-  if (object.userData.upholsteryCategory) {
-    document.getElementById('upholstery-category').value = object.userData.upholsteryCategory;
-    populateVariants();
-    if (object.userData.upholsteryVariant) {
-      document.getElementById('upholstery-variant').value = object.userData.upholsteryVariant;
-      updateUpholsteryPreview();
-    }
+if (object.userData.upholsteryCategory) {
+  document.getElementById('upholstery-category').value = object.userData.upholsteryCategory;
+  populateVariants();
+  if (object.userData.upholsteryVariant) {
+    setSelectedVariantFile(object.userData.upholsteryVariant);
   }
+}
+
 
   highlightObject(object, true);
   transformControls.attach(object);
   setMode('translate');
   updateSliders();
-  objectControlsDiv.style.display = 'block';
+  objectControlsDiv.style.display = 'contents';
 }
 
 function deselectObject() {
@@ -479,10 +607,15 @@ function setMode(mode) {
 
 function updateSliders() {
   if (currentObject) {
-    rotYSlider.value = THREE.MathUtils.radToDeg(currentObject.rotation.y).toFixed(0);
-    posYSlider.value = currentObject.position.y.toFixed(2);
+    const rotDeg = THREE.MathUtils.radToDeg(currentObject.rotation.y).toFixed(0);
+    const posY = currentObject.position.y.toFixed(2);
+    rotYSlider.value = rotDeg;
+    posYSlider.value = posY;
+    document.getElementById('rotation-y-input').value = rotDeg;
+    document.getElementById('position-y-input').value = posY;
   }
 }
+
 
 // ===================================================
 // ЗАГРУЗКА МОДЕЛЕЙ
@@ -524,24 +657,38 @@ function addSection(type) {
 
   const model = modelsCache[type].clone(true);
 
-  model.traverse((child) => {
+model.traverse((child) => {
     if (child.isMesh) {
       child.material = child.material.clone();
-      if (child.material.map) child.material.map = null;
+
+      // Сохраняем текстуру, если она была
+      if (!child.userData.hasOriginalTexture) {
+        if (child.material.map) child.material.map = null;
+      }
       if (child.material.normalMap) child.material.normalMap = null;
       if (child.material.roughnessMap) child.material.roughnessMap = null;
       if (child.material.metalnessMap) child.material.metalnessMap = null;
 
-      child.material.color.setHex(0xffffff);
+      // Меняем цвет только если нет текстуры
+      if (!child.userData.hasOriginalTexture) {
+        child.material.color.setHex(0xffffff);
+      }
       child.material.metalness = 0;
       child.material.roughness = 0.7;
       child.material.emissive = new THREE.Color(0x000000);
       child.material.needsUpdate = true;
-      child.userData.originalColor = 0xffffff;
+      child.userData.originalColor = child.material.color.getHex();
     }
   });
 
+
   model.scale.set(10, 10, 10);
+  model.traverse((child) => {
+  if (child.isMesh) {
+    child.castShadow = true;
+  }
+});
+
 
   const group = new THREE.Group();
   group.add(model);
@@ -550,7 +697,7 @@ function addSection(type) {
   const frameHexStr = document.getElementById('frame-color').value;
   const upholsteryHexStr = document.getElementById('upholstery-color').value;
   const upholsteryCat = document.getElementById('upholstery-category').value;
-  const upholsteryVariant = document.getElementById('upholstery-variant').value;
+const upholsteryVariant = getSelectedVariantFile();
 
   group.userData = {
     type: type,
@@ -570,8 +717,10 @@ function addSection(type) {
 
   scene.add(group);
   sceneObjects.push(group);
+  buildDimensions(group);
   currentXPosition += 10;
 }
+
 
 // ===================================================
 // КЛИК ПО СЦЕНЕ
@@ -835,51 +984,61 @@ const COLLISION_PADDING = 0.1;
 // ===================================================
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ИСТОРИИ
 // ===================================================
+// Bounding box БЕЗ размерных линий
+function getObjBox(obj) {
+  obj.updateMatrixWorld(true);
+  const box = new THREE.Box3();
+  const v = new THREE.Vector3();
+  obj.children.forEach(child => {
+    if (child.name === 'dimension-group') return;
+    child.traverse(mesh => {
+      if (mesh.isMesh && mesh.geometry) {
+        if (mesh.geometry.boundingBox === null) mesh.geometry.computeBoundingBox();
+        const bb = mesh.geometry.boundingBox;
+        if (bb) {
+          v.copy(bb.min); mesh.localToWorld(v); box.expandByPoint(v);
+          v.copy(bb.max); mesh.localToWorld(v); box.expandByPoint(v);
+        }
+      }
+    });
+  });
+  return box;
+}
+
 
 function snapToNeighbors(draggedObj) {
   if (!draggedObj) return;
-  
-  // 1. Получаем реальные габариты (для отрисовки и физики)
-  draggedObj.updateMatrixWorld(true);
-  const draggedBox = new THREE.Box3().setFromObject(draggedObj);
 
-  // 2. Создаем "внутреннюю" коробку (для логики стыковки)
-  // Мы сжимаем коробку со всех сторон на COLLISION_PADDING
+  draggedObj.updateMatrixWorld(true);
+  const draggedBox = getObjBox(draggedObj);
+
   const innerBox = draggedBox.clone();
   innerBox.min.x += COLLISION_PADDING;
   innerBox.max.x -= COLLISION_PADDING;
   innerBox.min.z += COLLISION_PADDING;
   innerBox.max.z -= COLLISION_PADDING;
-  
-  // Защита от того, чтобы коробка не схлопнулась в точку, если объект очень маленький
+
   if (innerBox.min.x >= innerBox.max.x) innerBox.min.x = draggedBox.min.x;
   if (innerBox.min.z >= innerBox.max.z) innerBox.min.z = draggedBox.min.z;
 
-  // --- Фаза 1: Выталкивание при пересечении (используем innerBox!) ---
+  // --- Фаза 1: Выталкивание ---
   sceneObjects.forEach(obj => {
     if (obj === draggedObj) return;
     obj.updateMatrixWorld(true);
-    
-    // Для соседа тоже берем "внутреннюю" коробку, чтобы стыковка была симметричной
-    const objBox = new THREE.Box3().setFromObject(obj);
-    const objInnerBox = objBox.clone();
-    objInnerBox.min.x += COLLISION_PADDING;
-    objInnerBox.max.x -= COLLISION_PADDING;
-    objInnerBox.min.z += COLLISION_PADDING;
-    objInnerBox.max.z -= COLLISION_PADDING;
 
-    // Проверяем пересечение ВНУТРЕННИХ коробок
+    const objBox = getObjBox(obj);
+    const objInnerBox = objBox.clone();
+    objInnerBox.min.x += COLLISION_PADDING; objInnerBox.max.x -= COLLISION_PADDING;
+    objInnerBox.min.z += COLLISION_PADDING; objInnerBox.max.z -= COLLISION_PADDING;
+
     const xOv = innerBox.min.x < objInnerBox.max.x && innerBox.max.x > objInnerBox.min.x;
     const zOv = innerBox.min.z < objInnerBox.max.z && innerBox.max.z > objInnerBox.min.z;
 
     if (xOv && zOv) {
-      // Вычисляем силы выталкивания на основе ВНУТРЕННИХ коробок,
-      // но двигаем сам объект (draggedObj), у которого геометрия полная.
       const pushR = objInnerBox.max.x - innerBox.min.x;
       const pushL = innerBox.max.x - objInnerBox.min.x;
       const pushF = objInnerBox.max.z - innerBox.min.z;
       const pushB = innerBox.max.z - objInnerBox.min.z;
-
       const minPush = Math.min(pushR, pushL, pushF, pushB);
 
       if (minPush === pushR)      draggedObj.position.x += pushR;
@@ -887,78 +1046,59 @@ function snapToNeighbors(draggedObj) {
       else if (minPush === pushF) draggedObj.position.z += pushF;
       else                        draggedObj.position.z -= pushB;
 
-      // После движения пересчитываем innerBox, так как позиция изменилась
       draggedObj.updateMatrixWorld(true);
-      innerBox.setFromObject(draggedObj);
-      innerBox.min.x += COLLISION_PADDING;
-      innerBox.max.x -= COLLISION_PADDING;
-      innerBox.min.z += COLLISION_PADDING;
-      innerBox.max.z -= COLLISION_PADDING;
+      innerBox.copy(getObjBox(draggedObj));
+      innerBox.min.x += COLLISION_PADDING; innerBox.max.x -= COLLISION_PADDING;
+      innerBox.min.z += COLLISION_PADDING; innerBox.max.z -= COLLISION_PADDING;
     }
   });
 
-  // --- Фаза 2: Притяжение по грани (Snap) ---
+  // --- Фаза 2: Притяжение по грани ---
   let snapX = null, snapZ = null;
   let minDistX = SNAP_THRESHOLD, minDistZ = SNAP_THRESHOLD;
 
   sceneObjects.forEach(obj => {
     if (obj === draggedObj) return;
     obj.updateMatrixWorld(true);
-    
-    const objBox = new THREE.Box3().setFromObject(obj);
-    const objInnerBox = objBox.clone();
-    objInnerBox.min.x += COLLISION_PADDING;
-    objInnerBox.max.x -= COLLISION_PADDING;
-    objInnerBox.min.z += COLLISION_PADDING;
-    objInnerBox.max.z -= COLLISION_PADDING;
 
-    // Логика привязки теперь работает с innerBox
+    const objBox = getObjBox(obj);
+    const objInnerBox = objBox.clone();
+    objInnerBox.min.x += COLLISION_PADDING; objInnerBox.max.x -= COLLISION_PADDING;
+    objInnerBox.min.z += COLLISION_PADDING; objInnerBox.max.z -= COLLISION_PADDING;
+
     const zOverlap = innerBox.min.z < objInnerBox.max.z && innerBox.max.z > objInnerBox.min.z;
     if (zOverlap) {
       const gap1 = objInnerBox.min.x - innerBox.max.x;
-      if (gap1 >= 0 && gap1 < minDistX) {
-        minDistX = gap1;
-        snapX = draggedObj.position.x + gap1;
-      }
+      if (gap1 >= 0 && gap1 < minDistX) { minDistX = gap1; snapX = draggedObj.position.x + gap1; }
       const gap2 = innerBox.min.x - objInnerBox.max.x;
-      if (gap2 >= 0 && gap2 < minDistX) {
-        minDistX = gap2;
-        snapX = draggedObj.position.x - gap2;
-      }
+      if (gap2 >= 0 && gap2 < minDistX) { minDistX = gap2; snapX = draggedObj.position.x - gap2; }
     }
 
     const xOverlap = innerBox.min.x < objInnerBox.max.x && innerBox.max.x > objInnerBox.min.x;
     if (xOverlap) {
       const gap3 = objInnerBox.min.z - innerBox.max.z;
-      if (gap3 >= 0 && gap3 < minDistZ) {
-        minDistZ = gap3;
-        snapZ = draggedObj.position.z + gap3;
-      }
+      if (gap3 >= 0 && gap3 < minDistZ) { minDistZ = gap3; snapZ = draggedObj.position.z + gap3; }
       const gap4 = innerBox.min.z - objInnerBox.max.z;
-      if (gap4 >= 0 && gap4 < minDistZ) {
-        minDistZ = gap4;
-        snapZ = draggedObj.position.z - gap4;
-      }
+      if (gap4 >= 0 && gap4 < minDistZ) { minDistZ = gap4; snapZ = draggedObj.position.z - gap4; }
     }
   });
 
-  if (snapX !== null) { 
-    draggedObj.position.x = snapX; 
-    draggedObj.updateMatrixWorld(true); 
-    innerBox.setFromObject(draggedObj); // Обновляем для следующей итерации
+  if (snapX !== null) {
+    draggedObj.position.x = snapX;
+    draggedObj.updateMatrixWorld(true);
+    innerBox.copy(getObjBox(draggedObj));
     innerBox.min.x += COLLISION_PADDING; innerBox.max.x -= COLLISION_PADDING;
     innerBox.min.z += COLLISION_PADDING; innerBox.max.z -= COLLISION_PADDING;
   }
-  if (snapZ !== null) { 
-    draggedObj.position.z = snapZ; 
-    draggedObj.updateMatrixWorld(true); 
-    innerBox.setFromObject(draggedObj);
+  if (snapZ !== null) {
+    draggedObj.position.z = snapZ;
+    draggedObj.updateMatrixWorld(true);
+    innerBox.copy(getObjBox(draggedObj));
     innerBox.min.x += COLLISION_PADDING; innerBox.max.x -= COLLISION_PADDING;
     innerBox.min.z += COLLISION_PADDING; innerBox.max.z -= COLLISION_PADDING;
   }
 
-  // --- Фаза 3: Притяжение углов (Corner Snap) ---
-  // Здесь тоже используем innerBox для проверки дистанции
+  // --- Фаза 3: Притяжение углов ---
   const CORNER_THRESHOLD = SNAP_THRESHOLD;
   let bestCornerDist = CORNER_THRESHOLD;
   let cornerDx = 0, cornerDz = 0;
@@ -973,17 +1113,14 @@ function snapToNeighbors(draggedObj) {
   sceneObjects.forEach(obj => {
     if (obj === draggedObj) return;
     obj.updateMatrixWorld(true);
-    const objBox = new THREE.Box3().setFromObject(obj);
+    const objBox = getObjBox(obj);
     const objInnerBox = objBox.clone();
-    objInnerBox.min.x += COLLISION_PADDING;
-    objInnerBox.max.x -= COLLISION_PADDING;
-    objInnerBox.min.z += COLLISION_PADDING;
-    objInnerBox.max.z -= COLLISION_PADDING;
+    objInnerBox.min.x += COLLISION_PADDING; objInnerBox.max.x -= COLLISION_PADDING;
+    objInnerBox.min.z += COLLISION_PADDING; objInnerBox.max.z -= COLLISION_PADDING;
 
     const hasXOverlap = innerBox.min.x < objInnerBox.max.x && innerBox.max.x > objInnerBox.min.x;
     const hasZOverlap = innerBox.min.z < objInnerBox.max.z && innerBox.max.z > objInnerBox.min.z;
-
-    if (hasXOverlap && hasZOverlap) return; 
+    if (hasXOverlap && hasZOverlap) return;
 
     const objCorners = [
       { x: objInnerBox.min.x, z: objInnerBox.min.z },
@@ -997,11 +1134,8 @@ function snapToNeighbors(draggedObj) {
         const dx = oc.x - dc.x;
         const dz = oc.z - dc.z;
         const dist = Math.sqrt(dx * dx + dz * dz);
-
         if (dist > 0.01 && dist < bestCornerDist) {
-          bestCornerDist = dist;
-          cornerDx = dx;
-          cornerDz = dz;
+          bestCornerDist = dist; cornerDx = dx; cornerDz = dz;
         }
       });
     });
@@ -1042,22 +1176,27 @@ function positionsChanged(beforeState) {
 function exportPNG() {
   deselectObject();
 
-  // 1. Сохраняем состояние фона
+  // Желаемое разрешение картинки
+  const EXPORT_W = 3840;
+  const EXPORT_H = 2160;
+
+  // Сохраняем оригинальные размеры
+  const origW = renderer.domElement.width;
+  const origH = renderer.domElement.height;
+  const origAspect = camera.aspect;
+
+  // Сохраняем состояние фона
   const wasBackgroundPlane = backgroundPlane !== null;
   let tempBgColor = null;
 
   if (wasBackgroundPlane) {
-    // Если есть плоскость-фон, временно убираем её со сцены для чистого рендера (если нужен прозрачный фон)
-    // ИЛИ оставляем, если хочешь, чтобы фон попал в картинку.
-    // В твоем ТЗ "Экспорт PNG (прозрачный фон)", значит фон сцены нам не нужен в картинке.
-    scene.remove(backgroundPlane); 
+    scene.remove(backgroundPlane);
   } else {
-    // Если нет плоскости, запоминаем цвет фона
     tempBgColor = scene.background;
-    scene.background = null; // Делаем прозрачным
+    scene.background = null;
   }
 
-  // Убираем пол, чтобы был чистый объект
+  // Убираем пол
   const floor = scene.children.find(c => c.geometry && c.geometry.type === 'PlaneGeometry');
   let floorVisible = null;
   if (floor) {
@@ -1065,25 +1204,36 @@ function exportPNG() {
     floor.visible = false;
   }
 
-  // Рендерим
+  // Меняем размер рендерера
+  renderer.setSize(EXPORT_W, EXPORT_H, false);
+  camera.aspect = EXPORT_W / EXPORT_H;
+  camera.updateProjectionMatrix();
+
+  // Рендерим в новом разрешении
   renderer.render(scene, camera);
   const dataURL = renderer.domElement.toDataURL('image/png');
 
-  // ВОССТАНАВЛИВАЕМ ВСЁ ОБРАТНО
+  // Восстанавливаем рендерер
+  renderer.setSize(window.innerWidth, window.innerHeight, true);
+  camera.aspect = origAspect;
+  camera.updateProjectionMatrix();
+
+  // Восстанавливаем фон
   if (wasBackgroundPlane) {
-    scene.add(backgroundPlane); // Возвращаем плоскость
+    scene.add(backgroundPlane);
   } else if (tempBgColor) {
-    scene.background = tempBgColor; // Возвращаем цвет
+    scene.background = tempBgColor;
   }
 
   if (floor) floor.visible = floorVisible;
-  
+
   // Скачиваем
   const a = document.createElement('a');
   a.href = dataURL;
   a.download = 'sofa-config.png';
   a.click();
 }
+
 
 // ===================================================
 // КАТАЛОГ ТЕКСТУР ОБИВКИ
@@ -1193,7 +1343,7 @@ function loadUpholsteryTexture(category, file, onLoad) {
     // 4. Настройки для четкости и сглаживания
     // tex.encoding = THREE.sRGBEncoding;
     tex.generateMipmaps = true;
-    tex.minFilter = THREE.LinearMipmapLinearFilter; // Лучший фильтр для повторов
+    tex.minFilter = THREE.LinearMipmapLinearFilter; // Фильтр для повторов
     tex.magFilter = THREE.LinearFilter;            // Сглаживание при увеличении
     tex.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 16; // Четкость под углом
 
@@ -1403,37 +1553,86 @@ function applyUpholsteryTextureToAll(category, file) {
 // ===================================================
 // СВЯЗАННЫЕ ВЫПАДАЮЩИЕ СПИСКИ
 // ===================================================
+// ===================================================
+// СЕТКА ВАРИАНТОВ ТЕКСТУРЫ (кружки вместо select)
+// ===================================================
 function populateVariants() {
   const categorySelect = document.getElementById('upholstery-category');
-  const variantSelect = document.getElementById('upholstery-variant');
-  const preview = document.getElementById('upholstery-preview');
+  const grid = document.getElementById('variant-grid');
 
   const cat = categorySelect.value;
-
-  // Очищаем
-  variantSelect.innerHTML = '';
+  grid.innerHTML = '';
 
   if (cat === 'none') {
-    variantSelect.style.display = 'none';
-    preview.style.display = 'none';
+    grid.style.display = 'none';
     return;
   }
 
   const data = upholsteryCatalog[cat];
-  if (!data) return;
+  if (!data) { grid.style.display = 'none'; return; }
 
-  variantSelect.style.display = 'block';
+  grid.style.display = 'grid';
 
-  data.textures.forEach((tex, i) => {
-    const opt = document.createElement('option');
-    opt.value = tex.file;
-    opt.textContent = tex.name;
-    variantSelect.appendChild(opt);
+  data.textures.forEach((tex) => {
+    const circle = document.createElement('div');
+    circle.className = 'variant-circle';
+    circle.style.backgroundImage = `url('${tex.file}')`;
+    circle.dataset.file = tex.file;
+    circle.setAttribute('data-tooltip', tex.name);
+    grid.appendChild(circle);
   });
 
-  // Превью первого варианта
-  updateUpholsteryPreview();
+  // Автовыбор первого варианта
+  if (data.textures.length > 0) {
+    setSelectedVariantFile(data.textures[0].file);
+  }
 }
+
+function setSelectedVariantFile(file) {
+  const grid = document.getElementById('variant-grid');
+  let found = false;
+  grid.querySelectorAll('.variant-circle').forEach(el => {
+    if (el.dataset.file === file) {
+      el.classList.add('active');
+      found = true;
+    } else {
+      el.classList.remove('active');
+    }
+  });
+  return found;
+}
+
+function getSelectedVariantFile() {
+  const active = document.querySelector('.variant-circle.active');
+  return active ? active.dataset.file : '';
+}
+
+// Обработка клика по кружку варианта
+document.getElementById('variant-grid').addEventListener('click', (e) => {
+  const circle = e.target.closest('.variant-circle');
+  if (!circle) return;
+
+  setSelectedVariantFile(circle.dataset.file);
+
+  const cat = document.getElementById('upholstery-category').value;
+  const file = circle.dataset.file;
+
+  saveState();
+
+  if (selectedObject) {
+    applyUpholsteryTexture(selectedObject, cat, file);
+    selectedObject.userData.upholsteryCategory = cat;
+    selectedObject.userData.upholsteryVariant = file;
+  } else {
+    applyUpholsteryTextureToAll(cat, file);
+    sceneObjects.forEach(obj => {
+      if (obj.userData) {
+        obj.userData.upholsteryCategory = cat;
+        obj.userData.upholsteryVariant = file;
+      }
+    });
+  }
+});
 
 function updateUpholsteryPreview() {
   const variantSelect = document.getElementById('upholstery-variant');
@@ -1449,6 +1648,156 @@ function updateUpholsteryPreview() {
   }
 }
 
+// ===================================================
+// РАЗМЕРНЫЕ ЛИНИИ
+// ===================================================
+const modelDimensions = {
+  straight: { width: 650, depth: 650,  height: 710 },
+  corner:   { width: 650, depth: 650, height: 710 }
+};
+
+let dimensionsVisible = false;
+
+function makeDimLine(p1, p2, color) {
+  const geo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
+  const mat = new THREE.LineBasicMaterial({
+    color: color, depthTest: false, transparent: true
+  });
+  const line = new THREE.Line(geo, mat);
+  line.renderOrder = 999;
+  line.raycast = () => {};
+  return line;
+}
+
+function makeDimLabel(text) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 120;
+  canvas.height = 40;
+  const ctx = canvas.getContext('2d');
+
+  // Белый текст, без фона
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 14px Segoe UI, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.minFilter = THREE.LinearFilter;
+
+  const mat = new THREE.SpriteMaterial({
+    map: tex,
+    depthTest: false,
+    depthWrite: false,
+    transparent: true
+  });
+
+  const spr = new THREE.Sprite(mat);
+  spr.scale.set(3, 1, 1);
+
+  spr.renderOrder = 999;
+  spr.raycast = () => {};
+  return spr;
+}
+
+
+
+function getLocalBoundingBox(obj) {
+  if (obj.userData._localBox) return obj.userData._localBox;
+
+  let model = null;
+  for (const child of obj.children) {
+    if (child.name !== 'dimension-group') { model = child; break; }
+  }
+  if (!model) return new THREE.Box3();
+
+  obj.updateMatrixWorld(true);
+  const box = new THREE.Box3();
+  const v = new THREE.Vector3();
+
+  model.traverse(child => {
+    if (child.isMesh && child.geometry && child.geometry.attributes.position) {
+      const pos = child.geometry.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        v.fromBufferAttribute(pos, i);
+        child.localToWorld(v);
+        obj.worldToLocal(v);
+        box.expandByPoint(v);
+      }
+    }
+  });
+
+  obj.userData._localBox = box;
+  return box;
+}
+
+function buildDimensions(obj) {
+  const old = obj.getObjectByName('dimension-group');
+  if (old) obj.remove(old);
+
+  const type = obj.userData.type;
+  const dims = modelDimensions[type];
+  if (!dims) return;
+
+  const box = getLocalBoundingBox(obj);
+  const off  = 4;
+  const tick = 1;
+  const col  = 0xB5B8B1;
+
+  const g = new THREE.Group();
+  g.name = 'dimension-group';
+  g.visible = dimensionsVisible;
+
+  // — Ширина (X): спереди, снизу —
+  const wY = box.min.y;
+  const wZ = box.max.z + off;
+  g.add(makeDimLine(new THREE.Vector3(box.min.x, wY, wZ), new THREE.Vector3(box.max.x, wY, wZ), col));
+  g.add(makeDimLine(new THREE.Vector3(box.min.x, box.min.y, box.max.z), new THREE.Vector3(box.min.x, wY, wZ), col));
+  g.add(makeDimLine(new THREE.Vector3(box.max.x, box.min.y, box.max.z), new THREE.Vector3(box.max.x, wY, wZ), col));
+  g.add(makeDimLine(new THREE.Vector3(box.min.x, wY - tick, wZ), new THREE.Vector3(box.min.x, wY + tick, wZ), col));
+  g.add(makeDimLine(new THREE.Vector3(box.max.x, wY - tick, wZ), new THREE.Vector3(box.max.x, wY + tick, wZ), col));
+  const wLabel = makeDimLabel(dims.width);
+  wLabel.position.set((box.min.x + box.max.x) / 2, wY, wZ);
+  g.add(wLabel);
+
+  // — Глубина (Z): справа, снизу —
+  const dY = box.min.y;
+  const dX = box.max.x + off;
+  g.add(makeDimLine(new THREE.Vector3(dX, dY, box.min.z), new THREE.Vector3(dX, dY, box.max.z), col));
+  g.add(makeDimLine(new THREE.Vector3(box.max.x, box.min.y, box.min.z), new THREE.Vector3(dX, dY, box.min.z), col));
+  g.add(makeDimLine(new THREE.Vector3(box.max.x, box.min.y, box.max.z), new THREE.Vector3(dX, dY, box.max.z), col));
+  g.add(makeDimLine(new THREE.Vector3(dX, dY - tick, box.min.z), new THREE.Vector3(dX, dY + tick, box.min.z), col));
+  g.add(makeDimLine(new THREE.Vector3(dX, dY - tick, box.max.z), new THREE.Vector3(dX, dY + tick, box.max.z), col));
+  const dLabel = makeDimLabel(dims.depth);
+  dLabel.position.set(dX, dY, (box.min.z + box.max.z) / 2);
+  g.add(dLabel);
+
+  // — Высота (Y): слева —
+  const hX = box.min.x - off;
+  const hZ = box.min.z;
+  g.add(makeDimLine(new THREE.Vector3(hX, box.min.y, hZ), new THREE.Vector3(hX, box.max.y, hZ), col));
+  g.add(makeDimLine(new THREE.Vector3(box.min.x, box.min.y, hZ), new THREE.Vector3(hX, box.min.y, hZ), col));
+  g.add(makeDimLine(new THREE.Vector3(box.min.x, box.max.y, hZ), new THREE.Vector3(hX, box.max.y, hZ), col));
+  g.add(makeDimLine(new THREE.Vector3(hX - tick, box.min.y, hZ), new THREE.Vector3(hX + tick, box.min.y, hZ), col));
+  g.add(makeDimLine(new THREE.Vector3(hX - tick, box.max.y, hZ), new THREE.Vector3(hX + tick, box.max.y, hZ), col));
+  const hLabel = makeDimLabel(dims.height);   //  const hLabel = makeDimLabel(dims.height + ' см');
+
+  hLabel.position.set(hX, (box.min.y + box.max.y) / 2, hZ);
+  g.add(hLabel);
+
+  obj.add(g);
+}
+
+function toggleDimensions() {
+  dimensionsVisible = !dimensionsVisible;
+  const btn = document.getElementById('toggle-dimensions');
+  // btn.textContent = dimensionsVisible ? 'Скрыть' : 'Показать';
+  sceneObjects.forEach(obj => {
+    const dg = obj.getObjectByName('dimension-group');
+    if (dg) dg.visible = dimensionsVisible;
+  });
+}
+
 
 // ===================================================
 // ИНИЦИАЛИЗАЦИЯ
@@ -1462,6 +1811,8 @@ function init() {
   camera.lookAt(0, 0, 0);
 
 renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -1494,20 +1845,43 @@ renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     }
   });
 
-  // Свет
-  const ambient = new THREE.AmbientLight(0xffffff, 0.8);
-  scene.add(ambient);
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  dirLight.position.set(100, 200, 100);
-  scene.add(dirLight);
+// Свет
+const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+scene.add(ambient);
 
-  // Пол
-  const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(2000, 2000),
-    new THREE.MeshStandardMaterial({ color: 0x888888 })
-  );
-  floor.rotation.x = -Math.PI / 2;
-  scene.add(floor);
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+dirLight.position.set(0, 100, 0);
+dirLight.castShadow = true;
+dirLight.shadow.mapSize.width = 2048;
+dirLight.shadow.mapSize.height = 2048;
+dirLight.shadow.camera.near = 50;
+dirLight.shadow.camera.far = 3000;
+dirLight.shadow.camera.left = -1000;
+dirLight.shadow.camera.right = 1000;
+dirLight.shadow.camera.top = 1000;
+dirLight.shadow.camera.bottom = -1000;
+dirLight.shadow.bias = -0.001;
+scene.add(dirLight);
+
+// Пол (видимый, серый — без теней)
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(2000, 2000),
+  new THREE.MeshStandardMaterial({ color: 0x888888 })
+);
+floor.rotation.x = -Math.PI / 2;
+scene.add(floor);
+
+// Плоскость теней (прозрачная, только тень)
+const shadowPlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(2000, 2000),
+  new THREE.ShadowMaterial({ opacity: 0.15, color: 0x000000 })
+);
+shadowPlane.rotation.x = -Math.PI / 2;
+shadowPlane.position.y = 0.1; // чуть выше пола, чтобы не было z-fighting
+shadowPlane.receiveShadow = true;
+scene.add(shadowPlane);
+
+
 
   // Загрузка моделей
   loadModels();
@@ -1537,29 +1911,36 @@ renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   document.getElementById('add-corner').onclick = () => addSection('corner');
 
   // Цвет каркаса — быстрые кнопки
-  document.getElementById('frame-color-black').onclick = () => {
-    const colorHex = 0x000000;
-    if (selectedObject) {
-      saveState();
-      selectedObject.userData.frameColor = '#000000';
-      changeColorByType(selectedObject, 'frame', colorHex);
-    } else {
-      saveState();
-      updateColorForAllSceneObjects('frame', colorHex);
-    }
-  };
+document.getElementById('frame-color-black').onclick = () => {
+  const colorHex = 0x000000;
+  if (selectedObject) {
+    saveState();
+    selectedObject.userData.frameColor = '#000000';
+    changeColorByType(selectedObject, 'frame', colorHex);
+  } else {
+    saveState();
+    updateColorForAllSceneObjects('frame', colorHex);
+  }
+  document.getElementById('frame-color').value = '#000000';
+  document.getElementById('frame-color-black').classList.add('active');
+  document.getElementById('frame-color-gray').classList.remove('active');
+};
 
-  document.getElementById('frame-color-gray').onclick = () => {
-    const colorHex = 0x888888;
-    if (selectedObject) {
-      saveState();
-      selectedObject.userData.frameColor = '#888888';
-      changeColorByType(selectedObject, 'frame', colorHex);
-    } else {
-      saveState();
-      updateColorForAllSceneObjects('frame', colorHex);
-    }
-  };
+document.getElementById('frame-color-gray').onclick = () => {
+  const colorHex = 0x888888;
+  if (selectedObject) {
+    saveState();
+    selectedObject.userData.frameColor = '#888888';
+    changeColorByType(selectedObject, 'frame', colorHex);
+  } else {
+    saveState();
+    updateColorForAllSceneObjects('frame', colorHex);
+  }
+  document.getElementById('frame-color').value = '#888888';
+  document.getElementById('frame-color-gray').classList.add('active');
+  document.getElementById('frame-color-black').classList.remove('active');
+};
+
 
   // Цвет каркаса — пикер
   document.getElementById('frame-color').oninput = (e) => {
@@ -1602,59 +1983,86 @@ renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   // };
 
     // --- Текстуры обивки (каскадные списки) ---
-  document.getElementById('upholstery-category').onchange = () => {
-    populateVariants();
-    const cat = document.getElementById('upholstery-category').value;
-    const variantSelect = document.getElementById('upholstery-variant');
-    const file = variantSelect.value;
+ document.getElementById('upholstery-category').onchange = () => {
+  populateVariants();
+  const cat = document.getElementById('upholstery-category').value;
+  const file = getSelectedVariantFile();
 
-    saveState();
+  saveState();
 
-    if (selectedObject) {
-      applyUpholsteryTexture(selectedObject, cat, file);
-      selectedObject.userData.upholsteryCategory = cat;
-      selectedObject.userData.upholsteryVariant = file;
-    } else {
-      applyUpholsteryTextureToAll(cat, file);
-      sceneObjects.forEach(obj => {
-        if (obj.userData) {
-          obj.userData.upholsteryCategory = cat;
-          obj.userData.upholsteryVariant = file;
-        }
-      });
-    }
-  };
+  if (selectedObject) {
+    applyUpholsteryTexture(selectedObject, cat, file);
+    selectedObject.userData.upholsteryCategory = cat;
+    selectedObject.userData.upholsteryVariant = file;
+  } else {
+    applyUpholsteryTextureToAll(cat, file);
+    sceneObjects.forEach(obj => {
+      if (obj.userData) {
+        obj.userData.upholsteryCategory = cat;
+        obj.userData.upholsteryVariant = file;
+      }
+    });
+  }
+};
 
-  document.getElementById('upholstery-variant').onchange = () => {
-    updateUpholsteryPreview();
-    const cat = document.getElementById('upholstery-category').value;
-    const file = document.getElementById('upholstery-variant').value;
-
-    saveState();
-
-    if (selectedObject) {
-      applyUpholsteryTexture(selectedObject, cat, file);
-      selectedObject.userData.upholsteryCategory = cat;
-      selectedObject.userData.upholsteryVariant = file;
-    } else {
-      applyUpholsteryTextureToAll(cat, file);
-      sceneObjects.forEach(obj => {
-        if (obj.userData) {
-          obj.userData.upholsteryCategory = cat;
-          obj.userData.upholsteryVariant = file;
-        }
-      });
-    }
-  };
 
   // Инициализация списков
+
+  // Сброс цветов и материалов
+document.getElementById('reset-upholstery').onclick = () => {
+  saveState();
+
+  // Сбрасываем UI
+  document.getElementById('upholstery-color').value = '#ffffff';
+  document.getElementById('frame-color').value = '#888888';
+  document.getElementById('upholstery-category').value = 'none';
+  document.getElementById('frame-color-black').classList.remove('active');
+  document.getElementById('frame-color-gray').classList.remove('active');
+  populateVariants(); // скроет сетку
+
+  if (selectedObject) {
+    // Сброс для выделенного объекта
+    selectedObject.userData.frameColor = '#888888';
+    selectedObject.userData.upholsteryColor = '#ffffff';
+    selectedObject.userData.upholsteryCategory = 'none';
+    selectedObject.userData.upholsteryVariant = '';
+
+    changeColorByType(selectedObject, 'frame', 0x888888);
+    changeColorByType(selectedObject, 'upholstery', 0xffffff);
+    applyUpholsteryTexture(selectedObject, 'none', '');
+  } else {
+    // Сброс для всех объектов
+    sceneObjects.forEach(obj => {
+      if (obj.userData) {
+        obj.userData.frameColor = '#888888';
+        obj.userData.upholsteryColor = '#ffffff';
+        obj.userData.upholsteryCategory = 'none';
+        obj.userData.upholsteryVariant = '';
+      }
+      changeColorByType(obj, 'frame', 0x888888);
+      changeColorByType(obj, 'upholstery', 0xffffff);
+      applyUpholsteryTexture(obj, 'none', '');
+    });
+  }
+};
+
   populateVariants();
 
 
   // Режимы трансформации
-  document.getElementById('mode-translate').onclick = () => setMode('translate');
-  document.getElementById('mode-rotate').onclick = () => setMode('rotate');
-  document.getElementById('mode-scale').onclick = () => setMode('scale');
+document.getElementById('mode-translate').onclick = () => {
+  setMode('translate');
+  setActiveMode('mode-translate');
+};
+document.getElementById('mode-rotate').onclick = () => {
+  setMode('rotate');
+  setActiveMode('mode-rotate');
+};
+// document.getElementById('mode-scale').onclick = () => {
+//   setMode('scale');
+//   setActiveMode('mode-scale');
+// };
+
 
   // Кнопки управления объектом
   document.getElementById('rotate-left').onclick = () => {
@@ -1688,25 +2096,46 @@ renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     }
   };
 
-  // Слайдеры
+  // Слайдеры и поля ввода
+  const rotYInput = document.getElementById('rotation-y-input');
+  const posYInput = document.getElementById('position-y-input');
+
   rotYSlider.oninput = () => {
     if (currentObject) {
       currentObject.rotation.y = THREE.MathUtils.degToRad(parseFloat(rotYSlider.value));
+      rotYInput.value = rotYSlider.value;
     }
   };
+  rotYInput.oninput = () => {
+    if (currentObject) {
+      let val = parseFloat(rotYInput.value);
+      if (isNaN(val)) val = 0;
+      val = Math.max(0, Math.min(360, val));
+      currentObject.rotation.y = THREE.MathUtils.degToRad(val);
+      rotYSlider.value = val;
+    }
+  };
+
   posYSlider.oninput = () => {
     if (currentObject) {
       currentObject.position.y = parseFloat(posYSlider.value);
+      posYInput.value = parseFloat(posYSlider.value).toFixed(2);
     }
   };
+  posYInput.oninput = () => {
+    if (currentObject) {
+      let val = parseFloat(posYInput.value);
+      if (isNaN(val)) val = 0;
+      val = Math.max(-10, Math.min(10, val));
+      currentObject.position.y = val;
+      posYSlider.value = val;
+    }
+  };
+
 
   // Фон сцены — загрузка изображения
   // --- ЛОГИКА ФОНА (ОБЪЕКТ, А НЕ ПРОСТО ЦВЕТ) ---
   
-
-
-
-
   // Кнопки масштаба
 document.getElementById('bg-scale-plus').onclick = () => {
   bgScale = Math.min(bgScale + 0.1, 3);
@@ -1790,6 +2219,22 @@ document.getElementById('bg-reset-btn').onclick = () => {
   scene.background = new THREE.Color(0xcccccc);
 };
 
+document.getElementById('bg-settings-trigger').onclick = () => {
+  const trigger = document.getElementById('bg-settings-trigger');
+  const content = document.getElementById('bg-settings-content');
+  trigger.classList.toggle('open');
+  content.classList.toggle('open');
+};
+
+
+
+  document.getElementById('toggle-dimensions').onclick = () => {
+  toggleDimensions();
+  const btn = document.getElementById('toggle-dimensions');
+  btn.classList.toggle('active', dimensionsVisible);
+  btn.setAttribute('data-tooltip', dimensionsVisible ? 'Скрыть размеры' : 'Показать размеры');
+};
+
 
 // Скрыть/показать пол
 document.getElementById('toggle-floor').onclick = () => {
@@ -1803,6 +2248,12 @@ document.getElementById('toggle-floor').onclick = () => {
   document.getElementById('export-model').onclick = exportScene;
   document.getElementById('export-png').onclick = exportPNG;
 }
+// function setActiveMode(btnId) {
+//   ['mode-translate', 'mode-rotate', 'mode-scale'].forEach(id => {
+//     document.getElementById(id).classList.remove('active');
+//   });
+//   document.getElementById(btnId).classList.add('active');
+// }
 
 function setupBackgroundPlane(texture) {
   if (backgroundPlane) {
