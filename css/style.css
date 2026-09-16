@@ -375,11 +375,11 @@ body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Ver
 .bg-scale-row button:hover { border-color: #96C22B; background: #f8fdf3; }
 
 .bg-move-grid {
-  display: grid; grid-template-columns: repeat(3, 36px); gap: 6px;
-  justify-content: center; margin: 10px 0;
+  display: flex;
+  gap: 8px;
 }
 .bg-move-grid button {
-  width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 6px;
+  flex: 1; height: 36px; border: 1px solid #ddd; border-radius: 6px;
   background: #fff; cursor: pointer; display: flex; align-items: center;
   justify-content: center; transition: 0.2s; padding: 0; font-size: 16px;
 }
@@ -442,3 +442,34 @@ body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Ver
 #object-controls .icon-btn.active { border-color: #96C22B; background: #eef7e3; }
 
 
+.slider-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.slider-row {
+  width: 48%; /* Ширина каждого ряда */
+  margin: 0 1%; /* Маржа для отступа */
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+.slider-input-row {
+  display: flex;
+  align-items: center;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0 5px;
+}
+
+input[type="number"] {
+  width: 120px;
+  margin: 0 5px;
+}

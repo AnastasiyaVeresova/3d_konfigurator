@@ -129,7 +129,7 @@
 
 
 
-  <h3>Цвет каркаса</h3>
+  <h3>Каркас</h3>
   <div class="icon-row">
     <div class="color-picker-wrap" data-tooltip="Подбор цвета">
       <input type="color" id="frame-color" value="#888888" />
@@ -236,15 +236,11 @@
       Масштаб: <span id="bg-scale-value">1.0</span>
     </label>
     <div class="bg-move-grid">
-      <div class="empty-cell"></div>
-      <button id="bg-move-up">↑</button>
-      <div class="empty-cell"></div>
       <button id="bg-move-left">←</button>
-      <div class="empty-cell"></div>
       <button id="bg-move-right">→</button>
-      <div class="empty-cell"></div>
+            <button id="bg-move-up">↑</button>
+
       <button id="bg-move-down">↓</button>
-      <div class="empty-cell"></div>
     </div>
   </div>
 </div>
@@ -266,15 +262,14 @@
     <div class="btn-row">
       <button id="move-left">←</button>
       <button id="move-right">→</button>
-    </div>
-    <div class="btn-row">
       <button id="move-up">↑</button>
       <button id="move-down">↓</button>
     </div>
   </div>
 
 <br>
-  <div>
+<div class="slider-container">
+  <div class="slider-row">
     <label>Поворот Y</label>
     <div class="slider-input-row">
       <input type="range" id="rotation-y-slider" min="0" max="360" value="0" step="1" />
@@ -282,13 +277,15 @@
     </div>
   </div>
 
-  <div>
+  <div class="slider-row">
     <label>Позиция Z</label>
     <div class="slider-input-row">
       <input type="range" id="position-y-slider" min="-10" max="10" value="0" step="0.1" />
       <input type="number" id="position-y-input" min="-10" max="10" value="0" step="0.1" />
     </div>
   </div>
+</div>
+
 
 <br>
 
