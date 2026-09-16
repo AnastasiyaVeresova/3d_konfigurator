@@ -113,13 +113,13 @@
       <text x="22" y="30" font-size="9" fill="#888" stroke="none">↔</text>
     </svg>
   </button>
-  <button class="icon-btn" id="undo-action" data-tooltip="Отменить (Ctrl+Z)">
+  <button class="icon-btn" id="undo-action" data-tooltip="Ctrl+Z">
     <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14 20 L8 26 L14 32"/>
       <path d="M8 26 L28 26 Q38 26 38 36 L38 38"/>
     </svg>
   </button>
-  <button class="icon-btn" id="redo-action" data-tooltip="Повторить (Ctrl+Y)">
+  <button class="icon-btn" id="redo-action" data-tooltip="Ctrl+Y">
     <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
       <path d="M34 20 L40 26 L34 32"/>
       <path d="M40 26 L20 26 Q10 26 10 36 L10 38"/>
@@ -160,7 +160,7 @@
       <span class="select-arrow">▼</span>
     </div>
   </div>
-  <button class="icon-btn" id="reset-upholstery" data-tooltip="К исходному" style="flex-shrink: 0;">
+  <button class="icon-btn" id="reset-upholstery" data-tooltip="Сбросить" style="flex-shrink: 0;">
     <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M36 24 A12 12 0 1 1 24 12"/>
       <path d="M24 6 L24 14 L32 10"/>
@@ -169,8 +169,6 @@
 </div>
 
 <div class="variant-grid" id="variant-grid"></div>
-
-
 
 
 <h3>Фон сцены, экспорт</h3>
@@ -249,47 +247,72 @@
 <div id="object-controls">
   <h3>Управление объектом</h3>
 
-  <div>
-    <label>Поворот</label>
-    <div class="btn-row">
-      <button id="rotate-left">⟲ Влево</button>
-      <button id="rotate-right">⟳ Вправо</button>
-    </div>
-  </div>
 
-  <div>
-    <label>Смещение</label>
-    <div class="btn-row">
+<div class="slider-container">
+        <button class="icon-btn" id="mode-translate" data-tooltip="Перемещение">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 8 L24 40"/>
+        <path d="M8 24 L40 24"/>
+        <path d="M18 14 L24 8 L30 14"/>
+        <path d="M14 18 L8 24 L14 30"/>
+        <path d="M18 34 L24 40 L30 34"/>
+        <path d="M34 18 L40 24 L34 30"/>
+      </svg>
+    </button>
+        <div class="btn-transform">
       <button id="move-left">←</button>
       <button id="move-right">→</button>
       <button id="move-up">↑</button>
       <button id="move-down">↓</button>
     </div>
   </div>
+  
 
 <br>
 <div class="slider-container">
-  <div class="slider-row">
-    <label>Поворот Y</label>
+    <div class="icon-row">
+          <button class="icon-btn" id="mode-rotate" data-tooltip="Вращение">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M36 24 A12 12 0 1 1 24 12"/>
+        <path d="M24 8 L24 14 L18 11"/>
+        <path d="M36 24 L40 20 L40 28"/>
+      </svg>
+    </button>
+        <div class="btn-row">
+      <button id="rotate-left">⟲</button>
+      <button id="rotate-right">⟳</button>
+    </div>
+      <div class="slider-row">
+        <!-- <label>Поворот</label> -->
     <div class="slider-input-row">
       <input type="range" id="rotation-y-slider" min="0" max="360" value="0" step="1" />
       <input type="number" id="rotation-y-input" min="0" max="360" value="0" step="1" />
     </div>
   </div>
+    <div>
 
-  <div class="slider-row">
+  </div>
+  </div>
+
+    
+
+
+    </div>
+
+
+  <!-- <div class="slider-row">
     <label>Позиция Z</label>
     <div class="slider-input-row">
       <input type="range" id="position-y-slider" min="-10" max="10" value="0" step="0.1" />
       <input type="number" id="position-y-input" min="-10" max="10" value="0" step="0.1" />
     </div>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->
 
 
 <br>
 
-<div>
+<!-- <div>
   <label>Режим трансформации</label>
   <div class="icon-row">
     <button class="icon-btn" id="mode-translate" data-tooltip="Перемещение">
@@ -302,22 +325,16 @@
         <path d="M34 18 L40 24 L34 30"/>
       </svg>
     </button>
-    <button class="icon-btn" id="mode-rotate" data-tooltip="Вращение">
-      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M36 24 A12 12 0 1 1 24 12"/>
-        <path d="M24 8 L24 14 L18 11"/>
-        <path d="M36 24 L40 20 L40 28"/>
-      </svg>
-    </button>
-    <!-- <button class="icon-btn" id="mode-scale" data-tooltip="Масштаб">
+
+    <button class="icon-btn" id="mode-scale" data-tooltip="Масштаб">
       <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <rect x="10" y="10" width="14" height="14" rx="2"/>
         <rect x="24" y="24" width="14" height="14" rx="2"/>
         <path d="M20 20 L28 28"/>
       </svg>
-    </button> -->
+    </button>
   </div>
-</div>
+</div> -->
 
 
 
@@ -366,7 +383,7 @@ let isDragging = false;
 
 const objectControlsDiv = document.getElementById('object-controls');
 const rotYSlider = document.getElementById('rotation-y-slider');
-const posYSlider = document.getElementById('position-y-slider');
+// const posYSlider = document.getElementById('position-y-slider');
 
 // ===================================================
 // ИСТОРИЯ ДЕЙСТВИЙ
@@ -605,11 +622,11 @@ function setMode(mode) {
 function updateSliders() {
   if (currentObject) {
     const rotDeg = THREE.MathUtils.radToDeg(currentObject.rotation.y).toFixed(0);
-    const posY = currentObject.position.y.toFixed(2);
+    // const posY = currentObject.position.y.toFixed(2);
     rotYSlider.value = rotDeg;
-    posYSlider.value = posY;
+    // posYSlider.value = posY;
     document.getElementById('rotation-y-input').value = rotDeg;
-    document.getElementById('position-y-input').value = posY;
+    // document.getElementById('position-y-input').value = posY;
   }
 }
 
@@ -2225,21 +2242,21 @@ document.getElementById('delete-object').onclick = () => {
     }
   };
 
-  posYSlider.oninput = () => {
-    if (currentObject) {
-      currentObject.position.y = parseFloat(posYSlider.value);
-      posYInput.value = parseFloat(posYSlider.value).toFixed(2);
-    }
-  };
-  posYInput.oninput = () => {
-    if (currentObject) {
-      let val = parseFloat(posYInput.value);
-      if (isNaN(val)) val = 0;
-      val = Math.max(-10, Math.min(10, val));
-      currentObject.position.y = val;
-      posYSlider.value = val;
-    }
-  };
+  // posYSlider.oninput = () => {
+  //   if (currentObject) {
+  //     currentObject.position.y = parseFloat(posYSlider.value);
+  //     posYInput.value = parseFloat(posYSlider.value).toFixed(2);
+  //   }
+  // };
+  // posYInput.oninput = () => {
+  //   if (currentObject) {
+  //     let val = parseFloat(posYInput.value);
+  //     if (isNaN(val)) val = 0;
+  //     val = Math.max(-10, Math.min(10, val));
+  //     currentObject.position.y = val;
+  //     posYSlider.value = val;
+  //   }
+  // };
 
 
   // Фон сцены — загрузка изображения
@@ -2357,12 +2374,12 @@ document.getElementById('toggle-floor').onclick = () => {
   document.getElementById('export-model').onclick = exportScene;
   document.getElementById('export-png').onclick = exportPNG;
 }
-// function setActiveMode(btnId) {
-//   ['mode-translate', 'mode-rotate', 'mode-scale'].forEach(id => {
-//     document.getElementById(id).classList.remove('active');
-//   });
-//   document.getElementById(btnId).classList.add('active');
-// }
+function setActiveMode(btnId) {
+  ['mode-translate', 'mode-rotate'].forEach(id => {
+    document.getElementById(id).classList.remove('active');
+  });
+  document.getElementById(btnId).classList.add('active');
+}
 
 function setupBackgroundPlane(texture) {
   if (backgroundPlane) {
