@@ -131,11 +131,11 @@
 
   <h3>Каркас</h3>
   <div class="icon-row">
-    <div class="color-picker-wrap" data-tooltip="Подбор цвета">
+    <div class="color-picker-wrap">
       <input type="color" id="frame-color" value="#888888" />
     </div>
     <div class="color-circle" id="frame-color-black"
-         style="background:#1a1a1a;"
+         style="background:#252525;"
          data-tooltip="Чёрный"></div>
     <div class="color-circle" id="frame-color-gray"
          style="background:#888888;"
@@ -145,7 +145,7 @@
 <h3>Обивка</h3>
 <div style="display: flex; gap: 8px; align-items: center;">
   <div class="upholstery-row" style="flex: 1;">
-    <div class="color-picker-wrap" data-tooltip="Подбор цвета">
+    <div class="color-picker-wrap">
       <input type="color" id="upholstery-color" value="#ffffff" />
     </div>
     <div class="select-wrap">
@@ -1281,71 +1281,71 @@ const upholsteryCatalog = {
   santorini: {
     label: 'Экокожа Santorini',
     textures: [
-      { name: 'Белый',    file: 'textures/santorini/S0402 (белый).jpg' },
-      { name: 'Чёрный',   file: 'textures/santorini/S0401 (черный).jpg' },
-      { name: 'Фисташковый',  file: 'textures/santorini/S0406 (фисташковый).jpg' },
-      { name: 'Бордовый', file: 'textures/santorini/S0411 (бордовый).jpg' },
-      { name: 'Кофейный',    file: 'textures/santorini/S0413 (кофейный).jpg' },
-      { name: 'Тёмно-Синий',   file: 'textures/santorini/S0419 (темно-синий).jpg' },
-      { name: 'Светло-голубой',   file: 'textures/santorini/S0420 (светло-голубой).jpg' },
-      { name: 'Красный',   file: 'textures/santorini/S0421 (красный).jpg' },
-      { name: 'Тёмно-серый',   file: 'textures/santorini/S0422 (темно-серый).jpg' },
-      { name: 'Светло-коричневый',   file: 'textures/santorini/S0426 (светло-коричневый).jpg' },
+      { name: 'Белый S0402',    file: 'textures/santorini/S0402 (белый).jpg' },
+      { name: 'Чёрный S0401',   file: 'textures/santorini/S0401 (черный).jpg' },
+      { name: 'Фисташковый S0406',  file: 'textures/santorini/S0406 (фисташковый).jpg' },
+      { name: 'Бордовый S0411', file: 'textures/santorini/S0411 (бордовый).jpg' },
+      { name: 'Кофейный S0413',    file: 'textures/santorini/S0413 (кофейный).jpg' },
+      { name: 'Тёмно-Синий S0419',   file: 'textures/santorini/S0419 (темно-синий).jpg' },
+      { name: 'Светло-голубой S0420',   file: 'textures/santorini/S0420 (светло-голубой).jpg' },
+      { name: 'Красный S0421',   file: 'textures/santorini/S0421 (красный).jpg' },
+      { name: 'Тёмно-серый S0422',   file: 'textures/santorini/S0422 (темно-серый).jpg' },
+      { name: 'Светло-коричневый S0427',   file: 'textures/santorini/S0426 (светло-коричневый).jpg' },
       { name: 'Слоновая кость',   file: 'textures/santorini/S0427 (слоновая кость).jpg' },
-      { name: 'Бежевый',   file: 'textures/santorini/S0428 (бежевый).jpg' },
-      { name: 'Шоколадный',   file: 'textures/santorini/S0429 (шоколадный).jpg' },
-      { name: 'Оранжевый',   file: 'textures/santorini/S0432 (оранжевый).jpg' },
+      { name: 'Бежевый S0428',   file: 'textures/santorini/S0428 (бежевый).jpg' },
+      { name: 'Шоколадный S0429',   file: 'textures/santorini/S0429 (шоколадный).jpg' },
+      { name: 'Оранжевый S0432',   file: 'textures/santorini/S0432 (оранжевый).jpg' },
     ]
   },
   moderno: {
     label: 'Ткань Moderno',
     textures: [
-      { name: 'Серый',    file: 'textures/moderno/02 (серый).jpg' },
-      { name: 'Терракот',    file: 'textures/moderno/05 (терракот).jpg' },
-      { name: 'Синий',  file: 'textures/moderno/07 (синий).jpg' },
-      { name: 'Мокко', file: 'textures/moderno/11 (мокко).jpg' },
-      { name: 'Чёрный', file: 'textures/moderno/16 (чёрный).jpg' },
+      { name: 'Серый 02',    file: 'textures/moderno/02 (серый).jpg' },
+      { name: 'Терракот 05',    file: 'textures/moderno/05 (терракот).jpg' },
+      { name: 'Синий 07',  file: 'textures/moderno/07 (синий).jpg' },
+      { name: 'Мокко 11', file: 'textures/moderno/11 (мокко).jpg' },
+      { name: 'Чёрный 16', file: 'textures/moderno/16 (чёрный).jpg' },
     ]
   },
   velutto: {
     label: 'Ткань Velutto',
     textures: [
-      { name: 'Светло-бежевый',  file: 'textures/velutto/Velutto 02 (светло-бежевый).jpg' },
-      { name: 'Бежевый',   file: 'textures/velutto/Velutto 03 (бежевый).jpg' },
-      { name: 'Коричневый',    file: 'textures/velutto/Velutto 06 (коричневый).jpg' },
-      { name: 'Серый',    file: 'textures/velutto/Velutto 18 (серый).jpg' },
-      { name: 'Чёрный',    file: 'textures/velutto/Velutto 20 (чёрный).jpg' },
+      { name: 'Светло-бежевый 02',  file: 'textures/velutto/Velutto 02 (светло-бежевый).jpg' },
+      { name: 'Бежевый 03',   file: 'textures/velutto/Velutto 03 (бежевый).jpg' },
+      { name: 'Коричневый 06',    file: 'textures/velutto/Velutto 06 (коричневый).jpg' },
+      { name: 'Серый 18',    file: 'textures/velutto/Velutto 18 (серый).jpg' },
+      { name: 'Чёрный 20',    file: 'textures/velutto/Velutto 20 (чёрный).jpg' },
     ]
   },
   velton: {
     label: 'Ткань Велтон',
     textures: [
-      { name: 'Белый',    file: 'textures/velton/wellton000 (белый).png' },
-      { name: 'Бежевый',  file: 'textures/velton/wellton130 (бежевый).png' },
-      { name: 'Коричневый', file: 'textures/velton/wellton230 (коричневый).png' },
-      { name: 'Коричневый', file: 'textures/velton/wellton297 (коричневый).png' },
-      { name: 'Зелёный', file: 'textures/velton/wellton696 (зеленый).png' },
-      { name: 'Зелёный', file: 'textures/velton/wellton697 (зеленый).png' },
-      { name: 'Синий', file: 'textures/velton/wellton797 (синий).png' },
-      { name: 'Серый', file: 'textures/velton/wellton912 (серый).png' },
-      { name: 'Серый', file: 'textures/velton/wellton953 (серый).png' },
-      { name: 'Серый', file: 'textures/velton/wellton990 (серый).png' },
-      { name: 'Тёмно-серый', file: 'textures/velton/wellton994 (темно-серый).png' },
-      { name: 'Чёрный', file: 'textures/velton/wellton998 (черный).png' },
+      { name: 'Белый 000',    file: 'textures/velton/wellton000 (белый).png' },
+      { name: 'Бежевый 130',  file: 'textures/velton/wellton130 (бежевый).png' },
+      { name: 'Коричневый 230', file: 'textures/velton/wellton230 (коричневый).png' },
+      { name: 'Коричневый 297', file: 'textures/velton/wellton297 (коричневый).png' },
+      { name: 'Зелёный 696', file: 'textures/velton/wellton696 (зеленый).png' },
+      { name: 'Зелёный 697', file: 'textures/velton/wellton697 (зеленый).png' },
+      { name: 'Синий 797', file: 'textures/velton/wellton797 (синий).png' },
+      { name: 'Серый 912', file: 'textures/velton/wellton912 (серый).png' },
+      { name: 'Серый 953', file: 'textures/velton/wellton953 (серый).png' },
+      { name: 'Серый 990', file: 'textures/velton/wellton990 (серый).png' },
+      { name: 'Тёмно-серый 994', file: 'textures/velton/wellton994 (темно-серый).png' },
+      { name: 'Чёрный 998', file: 'textures/velton/wellton998 (черный).png' },
     ]
   },
   umbra: {
     label: 'Ткань Умбра',
     textures: [
-      { name: 'Белый',    file: 'textures/umbra/tiling_umbra000 (белый).png' },
-      { name: 'Бежевый',   file: 'textures/umbra/tiling_umbra011 (бежевый).png' },
-      { name: 'Бежевый', file: 'textures/umbra/tiling_umbra110 (бежевый).png' },
-      { name: 'Жёлтый', file: 'textures/umbra/tiling_umbra153 (желтый).png' },
-      { name: 'Коричневый', file: 'textures/umbra/tiling_umbra292 (коричневый).png' },
-      { name: 'Зелёный', file: 'textures/umbra/tiling_umbra690 (зеленый).png' },
-      { name: 'Серый', file: 'textures/umbra/tiling_umbra900 (серый).png' },
-      { name: 'Серый', file: 'textures/umbra/tiling_umbra910 (серый).png' },
-      { name: 'Зелёный', file: 'textures/umbra/tiling_umbra967 (зеленый).png' },
+      { name: 'Белый 000',    file: 'textures/umbra/tiling_umbra000 (белый).png' },
+      { name: 'Бежевый 011',   file: 'textures/umbra/tiling_umbra011 (бежевый).png' },
+      { name: 'Бежевый 110', file: 'textures/umbra/tiling_umbra110 (бежевый).png' },
+      { name: 'Жёлтый 153', file: 'textures/umbra/tiling_umbra153 (желтый).png' },
+      { name: 'Коричневый 292', file: 'textures/umbra/tiling_umbra292 (коричневый).png' },
+      { name: 'Зелёный 690', file: 'textures/umbra/tiling_umbra690 (зеленый).png' },
+      { name: 'Серый 900', file: 'textures/umbra/tiling_umbra900 (серый).png' },
+      { name: 'Серый 910', file: 'textures/umbra/tiling_umbra910 (серый).png' },
+      { name: 'Зелёный 967', file: 'textures/umbra/tiling_umbra967 (зеленый).png' },
     ]
   }
 };
@@ -1366,19 +1366,18 @@ function loadUpholsteryTexture(category, file, onLoad) {
 
   textureLoader.load(file, (tex) => {
     // 1. Включаем повторение
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.wrapT = THREE.RepeatWrapping;
+    // tex.wrapS = THREE.RepeatWrapping;
+    // tex.wrapT = THREE.RepeatWrapping;
 
-    //     tex.wrapS = THREE.MirroredRepeatWrapping;
-    // tex.wrapT = THREE.MirroredRepeatWrapping;
+        tex.wrapS = THREE.MirroredRepeatWrapping;
+    tex.wrapT = THREE.MirroredRepeatWrapping;
 
-    
+    tex.offset.set(1, 1);
     // 2. Увеличиваем повтор (рисунок мельче)
-    tex.repeat.set(25, 25); 
+    tex.repeat.set(19, 19); 
 
     // 3. ГЛАВНОЕ: Размываем края текстуры, чтобы скрыть швы
-    blurTextureEdges(tex, 20); // 10px - ширина размытия (от 5 до 20)
-
+    blurTextureEdges(tex, 20); 
     // 4. Настройки для четкости и сглаживания
     // tex.encoding = THREE.sRGBEncoding;
     tex.generateMipmaps = true;
@@ -1393,18 +1392,18 @@ function loadUpholsteryTexture(category, file, onLoad) {
     console.warn('⚠️ Ошибка загрузки текстуры:', file);
     // Создаем серую заглушку с шумом, тоже с размытием
     const canvas = document.createElement('canvas');
-    canvas.width = 256; canvas.height = 256;
+    canvas.width = 364; canvas.height = 364;
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, 256, 256);
+    ctx.fillRect(0, 0, 364, 364);
     for (let i = 0; i < 500; i++) {
-      const x = Math.random() * 256; const y = Math.random() * 256;
+      const x = Math.random() * 364; const y = Math.random() * 364;
       ctx.fillStyle = `rgb(180,180,180)`; ctx.fillRect(x, y, 4, 4);
     }
     const fallback = new THREE.CanvasTexture(canvas);
-    fallback.wrapS = THREE.RepeatWrapping; fallback.wrapT = THREE.RepeatWrapping;
+    fallback.wrapS = THREE.RepeatWrapping; fallback.wrapT = THREE.MirroredRepeatWrapping;
     fallback.repeat.set(20, 20);
-    blurTextureEdges(fallback, 10); // Применяем размытие и к заглушке
+    blurTextureEdges(fallback, 20); // Применяем размытие и к заглушке
     fallback.generateMipmaps = true; fallback.minFilter = THREE.LinearMipmapLinearFilter;
     upholsteryTextureCache[key] = fallback;
     onLoad(fallback);
@@ -1472,8 +1471,8 @@ function blurTextureEdges(texture, pixelRadius = 40) {
   const ctx = canvas.getContext('2d');
   
   // Используем реальные размеры картинки
-  canvas.width = img.width || img.naturalWidth || 256;
-  canvas.height = img.height || img.naturalHeight || 256;
+  canvas.width = img.width || img.naturalWidth || 364;
+  canvas.height = img.height || img.naturalHeight || 364;
   
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
