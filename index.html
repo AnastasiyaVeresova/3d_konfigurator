@@ -84,9 +84,15 @@
 </div> -->
 
 <div id="ui-panel">
-<h3>Секции, размеры и история</h3>
-<div class="icon-row">
-  <button class="icon-btn" id="add-straight" data-tooltip="Прямая секция">
+<h3>Секции, история</h3>
+<div class="add-section-row">
+    <button class="icon-btn" id="undo-action" data-tooltip="Ctrl+Z">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 20 L8 26 L14 32"/>
+      <path d="M8 26 L28 26 Q38 26 38 36 L38 38"/>
+    </svg>
+  </button>
+  <button class="icon-btn-1 half-btn" id="add-straight" data-tooltip="Прямая секция">
     <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <rect x="10" y="14" width="28" height="16" rx="3"/>
       <line x1="10" y1="14" x2="38" y2="14" stroke-width="4"/>
@@ -94,7 +100,8 @@
       <circle cx="33" cy="34" r="2.5" fill="#888" stroke="none"/>
     </svg>
   </button>
-  <button class="icon-btn" id="add-corner" data-tooltip="Угловая секция">
+
+  <button class="icon-btn-1 half-btn" id="add-corner" data-tooltip="Угловая секция">
     <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10 30 L10 14 L30 14 L30 30 L38 30 L38 38 L10 38 Z"/>
       <line x1="10" y1="14" x2="30" y2="14" stroke-width="4"/>
@@ -103,17 +110,16 @@
       <circle cx="35" cy="36" r="2.5" fill="#888" stroke="none"/>
     </svg>
   </button>
-  <button class="toggle-icon" id="toggle-dimensions" data-tooltip="Показать размеры">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="8" y1="36" x2="40" y2="36"/>
-      <line x1="8" y1="32" x2="8" y2="40"/>
-      <line x1="40" y1="32" x2="40" y2="40"/>
-      <line x1="8" y1="12" x2="8" y2="36"/>
-      <line x1="4" y1="12" x2="12" y2="12"/>
-      <line x1="4" y1="36" x2="12" y2="36"/>
-      <text x="22" y="30" font-size="9" fill="#888" stroke="none">↔</text>
+    <button class="icon-btn" id="redo-action" data-tooltip="Ctrl+Y">
+    <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M34 20 L40 26 L34 32"/>
+      <path d="M40 26 L20 26 Q10 26 10 36 L10 38"/>
     </svg>
   </button>
+</div>
+
+<!-- <div class="icon-row">
+
   <button class="icon-btn" id="undo-action" data-tooltip="Ctrl+Z">
     <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14 20 L8 26 L14 32"/>
@@ -126,7 +132,7 @@
       <path d="M40 26 L20 26 Q10 26 10 36 L10 38"/>
     </svg>
   </button>
-</div>
+</div> -->
 
 
 
@@ -172,53 +178,55 @@
 <div class="variant-grid" id="variant-grid"></div>
 
 
-<h3>Сцена, экспорт</h3>
-<div class="icon-label-row">
-  <!-- <button class="icon-label-btn" id="bg-upload-btn" data-tooltip="Добавить"> -->
-    <!-- <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"> -->
-      <!-- <path d="M24 32 L24 14"/> -->
-      <!-- <path d="M16 22 L24 14 L32 22"/> -->
-      <!-- <path d="M10 34 L10 40 L38 40 L38 34"/> -->
-    <!-- </svg> -->
-    <!-- <span>Загрузить</span> -->
-  <!-- </button> -->
-  
-  <!-- <button class="icon-label-btn" id="bg-reset-btn" data-tooltip="Сбросить"> -->
-    <!-- <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"> -->
-      <!-- <path d="M14 18 L20 12 L26 18"/> -->
-      <!-- <path d="M20 12 L20 30 Q20 38 28 38 L34 38"/> -->
-      <!-- <path d="M30 32 L34 38 L30 44"/> -->
-    <!-- </svg> -->
-    <!-- <span>Сбросить</span> -->
-  <!-- </button> -->
-  <button class="icon-label-btn" id="toggle-floor" data-tooltip="Пол">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="8" y="30" width="32" height="10" rx="2"/>
-      <line x1="14" y1="30" x2="14" y2="40"/>
-      <line x1="20" y1="30" x2="20" y2="40"/>
-      <line x1="28" y1="30" x2="28" y2="40"/>
-      <line x1="34" y1="30" x2="34" y2="40"/>
-    </svg>
-    <!-- <span>Пол</span> -->
-  </button>
-<div class="icon-row">
-  <button class="icon-btn" id="export-model" data-tooltip="Экспорт сцены (.gltf)">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M24 8 L24 30"/>
-      <path d="M16 22 L24 30 L32 22"/>
-      <path d="M10 36 L10 40 L38 40 L38 36"/>
-    </svg>
-  </button>
-  <button class="icon-btn" id="export-png" data-tooltip="Экспорт PNG">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="10" y="10" width="28" height="28" rx="3"/>
-      <circle cx="18" cy="18" r="3"/>
-      <path d="M10 30 L18 24 L24 30 L30 22 L38 32 L38 36 L10 36 Z"/>
-    </svg>
-  </button>
+<h3>Размеры, пол, экспорт</h3>
+<div class="icon-label-row panel-split-row">
+  <!-- ЛЕВАЯ ГРУППА: Размеры и Пол -->
+  <div class="panel-group-left">
+    <button class="toggle-icon" id="toggle-dimensions" data-tooltip="Размеры">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="36" x2="40" y2="36"/>
+        <line x1="8" y1="32" x2="8" y2="40"/>
+        <line x1="40" y1="32" x2="40" y2="40"/>
+        <line x1="8" y1="12" x2="8" y2="36"/>
+        <line x1="4" y1="12" x2="12" y2="12"/>
+        <line x1="4" y1="36" x2="12" y2="36"/>
+        <text x="22" y="30" font-size="9" fill="#888" stroke="none">↔</text>
+      </svg>
+    </button>
+
+    <button class="icon-label-btn" id="toggle-floor" data-tooltip="Пол">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="30" width="32" height="10" rx="2"/>
+        <line x1="14" y1="30" x2="14" y2="40"/>
+        <line x1="20" y1="30" x2="20" y2="40"/>
+        <line x1="28" y1="30" x2="28" y2="40"/>
+        <line x1="34" y1="30" x2="34" y2="40"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ПРАВАЯ ГРУППА: Экспорт -->
+  <div class="panel-group-right">
+    <button class="icon-btn" id="export-model" data-tooltip="Экспорт сцены (.gltf)">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 8 L24 30"/>
+        <path d="M16 22 L24 30 L32 22"/>
+        <path d="M10 36 L10 40 L38 40 L38 36"/>
+      </svg>
+    </button>
+
+    <button class="icon-btn" id="export-png" data-tooltip="Экспорт PNG">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="10" y="10" width="28" height="28" rx="3"/>
+        <circle cx="18" cy="18" r="3"/>
+        <path d="M10 30 L18 24 L24 30 L30 22 L38 32 L38 36 L10 36 Z"/>
+      </svg>
+    </button>
+  </div>
 </div>
-</div>
-<input type="file" id="bg-file-input" accept="image/*" style="display:none" />
+
+
+<!-- <input type="file" id="bg-file-input" accept="image/*" style="display:none" /> -->
 
 
 <!-- <h3 class="collapse-h3" id="bg-settings-trigger">
@@ -247,8 +255,7 @@
 <br>
 
 <div id="object-controls">
-  <h3>Управление объектом</h3>
-
+<h3>Управление объектом</h3>
 <div class="slider-container">
         <button class="icon-btn" id="mode-translate" data-tooltip="Перемещение">
       <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -268,7 +275,6 @@
     </div>
   </div>  
 
-<br>
 <div class="slider-container">
     <div class="icon-row">
           <button class="icon-btn" id="mode-rotate" data-tooltip="Вращение">
@@ -573,9 +579,9 @@ function selectObject(object) {
   // if (object.userData.frameColor) {
   //   document.getElementById('frame-color').value = object.userData.frameColor;
   // }
-  if (object.userData.upholsteryColor) {
-    document.getElementById('upholstery-color').value = object.userData.upholsteryColor;
-  }
+  // if (object.userData.upholsteryColor) {
+  //   document.getElementById('upholstery-color').value = object.userData.upholsteryColor;
+  // }
 
   // Восстанавливаем категорию и вариант текстуры
 if (object.userData.upholsteryCategory) {
@@ -2119,6 +2125,23 @@ scene.add(shadowPlane);
   document.getElementById('add-straight').onclick = () => addSection('straight');
   document.getElementById('add-corner').onclick = () => addSection('corner');
 
+  document.getElementById('frame-color-black').addEventListener('click', () => {
+  if (selectedObject) {
+    saveState();
+    const count = changeColorByType(selectedObject, 'frame', 0x252525);
+    console.log(`Перекрашено мешей каркаса: ${count}`);
+  } 
+});
+
+document.getElementById('frame-color-gray').addEventListener('click', () => {
+  if (selectedObject) {
+    saveState();
+    const count = changeColorByType(selectedObject, 'frame', 0x888888);
+    console.log(`Перекрашено мешей каркаса: ${count}`);
+  } 
+});
+
+
   // Цвет каркаса — быстрые кнопки
 document.getElementById('frame-color-black').onclick = () => {
   const colorHex = 0x000000;
@@ -2222,8 +2245,8 @@ document.getElementById('reset-upholstery').onclick = () => {
   saveState();
 
   // Сбрасываем UI
-  document.getElementById('upholstery-color').value = '#ffffff';
-  document.getElementById('frame-color').value = '#888888';
+  // document.getElementById('upholstery-color').value = '#ffffff';
+  // document.getElementById('frame-color').value = '#888888';
   document.getElementById('upholstery-category').value = 'none';
   document.getElementById('frame-color-black').classList.remove('active');
   document.getElementById('frame-color-gray').classList.remove('active');
