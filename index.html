@@ -178,11 +178,20 @@
 <div class="variant-grid" id="variant-grid"></div>
 
 
-<h3>Размеры, пол, экспорт</h3>
+<h3>Пол, размеры, экспорт</h3>
 <div class="icon-label-row panel-split-row">
   <!-- ЛЕВАЯ ГРУППА: Размеры и Пол -->
   <div class="panel-group-left">
-    <button class="toggle-icon" id="toggle-dimensions" data-tooltip="Размеры">
+    <button class="icon-label-btn" id="toggle-floor" data-tooltip="Пол">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="30" width="32" height="10" rx="2"/>
+        <line x1="14" y1="30" x2="14" y2="40"/>
+        <line x1="20" y1="30" x2="20" y2="40"/>
+        <line x1="28" y1="30" x2="28" y2="40"/>
+        <line x1="34" y1="30" x2="34" y2="40"/>
+      </svg>
+    </button>
+        <button class="toggle-icon" id="toggle-dimensions" data-tooltip="Размеры">
       <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="36" x2="40" y2="36"/>
         <line x1="8" y1="32" x2="8" y2="40"/>
@@ -191,16 +200,6 @@
         <line x1="4" y1="12" x2="12" y2="12"/>
         <line x1="4" y1="36" x2="12" y2="36"/>
         <text x="22" y="30" font-size="9" fill="#888" stroke="none">↔</text>
-      </svg>
-    </button>
-
-    <button class="icon-label-btn" id="toggle-floor" data-tooltip="Пол">
-      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="8" y="30" width="32" height="10" rx="2"/>
-        <line x1="14" y1="30" x2="14" y2="40"/>
-        <line x1="20" y1="30" x2="20" y2="40"/>
-        <line x1="28" y1="30" x2="28" y2="40"/>
-        <line x1="34" y1="30" x2="34" y2="40"/>
       </svg>
     </button>
     <button id="toggle-snap" class="icon-btn" data-tooltip="Привязка">
@@ -219,7 +218,7 @@
       </svg>
     </button>
 
-    <button class="icon-btn" id="export-png" data-tooltip="Экспорт PNG">
+    <button class="icon-btn" id="export-png" data-tooltip="PNG">
       <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <rect x="10" y="10" width="28" height="28" rx="3"/>
         <circle cx="18" cy="18" r="3"/>
@@ -388,6 +387,12 @@ let currentXPosition = 0;
 const SNAP_THRESHOLD = 3.0;
 let isDragging = false;
 let snapEnabled = true;
+
+let lastSectionRotation = 0; // в радианах
+let lastSectionSize = null;  // { x, z }
+let nextPlacementX = 0;
+let nextRightEdge = 0;
+
 
 const objectControlsDiv = document.getElementById('object-controls');
 const rotYSlider = document.getElementById('rotation-y-slider');
@@ -664,19 +669,31 @@ function loadModels() {
     new THREE.GLTFLoader().load(modelsPaths[key], (gltf) => {
       const sceneModel = gltf.scene;
       assignMeshTypes(sceneModel);
-      modelsCache[key] = sceneModel;
+
+      const box = new THREE.Box3().setFromObject(sceneModel);
+      const size = {
+        x: box.max.x - box.min.x,
+        y: box.max.y - box.min.y,
+        z: box.max.z - box.min.z
+      };
+      const offset = {
+        x: box.min.x,
+        y: box.min.y,
+        z: box.min.z
+      };
+
+      modelsCache[key] = { model: sceneModel, size, offset };
       loadedCount++;
+
       if (loadedCount === keys.length) {
         modelsLoaded = true;
-        console.log('✅ Все модели загружены');
+        console.log('✅ Все модели загружены', modelsCache);
         saveState();
-        
       }
     }, undefined, (error) => console.error('Ошибка загрузки модели:', key, error));
   });
-
-
 }
+
 
 // ===================================================
 // ДОБАВЛЕНИЕ СЕКЦИИ
@@ -689,18 +706,19 @@ function addSection(type) {
 
   saveState();
 
-  if (!modelsCache[type]) {
+  const cache = modelsCache[type];
+  if (!cache) {
     alert('Модель не загрузилась: ' + type);
     return;
   }
 
-  const model = modelsCache[type].clone(true);
+  const model = cache.model.clone(true);
+  const originalSize = cache.size;
+  const originalOffset = cache.offset;
 
-model.traverse((child) => {
+  model.traverse((child) => {
     if (child.isMesh) {
       child.material = child.material.clone();
-
-      // Сохраняем текстуру, если она была
       if (!child.userData.hasOriginalTexture) {
         if (child.material.map) child.material.map = null;
       }
@@ -708,7 +726,6 @@ model.traverse((child) => {
       if (child.material.roughnessMap) child.material.roughnessMap = null;
       if (child.material.metalnessMap) child.material.metalnessMap = null;
 
-      // Меняем цвет только если нет текстуры
       if (!child.userData.hasOriginalTexture) {
         child.material.color.setHex(0xffffff);
       }
@@ -720,50 +737,48 @@ model.traverse((child) => {
     }
   });
 
+  const scaleValue = 10;
+  model.scale.set(scaleValue, scaleValue, scaleValue);
 
-  model.scale.set(10, 10, 10);
+  // Габариты и смещение после масштабирования
+  const scaledWidth = originalSize.x * scaleValue;
+  const scaledOffsetX = originalOffset.x * scaleValue;
+
   model.traverse((child) => {
-  if (child.isMesh) {
-    child.castShadow = true;
-  }
-});
-
+    if (child.isMesh) child.castShadow = true;
+  });
 
   const group = new THREE.Group();
   group.add(model);
-  group.position.set(currentXPosition, 0, 0);
-  
 
-  // const frameHexStr = document.getElementById('frame-color').value;
-  // const upholsteryHexStr = document.getElementById('upholstery-color').value;
+  // --- Размещение с учётом смещения модели ---
+  // Левый край новой секции = правый край предыдущей
+  // Левый край в мире = group.position.x + scaledOffsetX
+  // Значит: group.position.x = nextRightEdge - scaledOffsetX
+  group.position.set(nextRightEdge - scaledOffsetX, 0, 0);
+  // Правый край новой секции = group.position.x + scaledOffsetX + scaledWidth
+  nextRightEdge = group.position.x + scaledOffsetX + scaledWidth;
+  // ------------------------------------------
+
   const upholsteryCat = document.getElementById('upholstery-category').value;
-const upholsteryVariant = getSelectedVariantFile();
+  const upholsteryVariant = getSelectedVariantFile();
 
   group.userData = {
     type: type,
-    // frameColor: frameHexStr,
-    // upholsteryColor: upholsteryHexStr,
     upholsteryCategory: upholsteryCat,
     upholsteryVariant: upholsteryVariant || ''
   };
-
-  // changeColorByType(group, 'frame', hexStringToNumber(frameHexStr));
-  // changeColorByType(group, 'upholstery', hexStringToNumber(upholsteryHexStr));
 
   if (upholsteryCat !== 'none' && upholsteryVariant) {
     applyUpholsteryTexture(group, upholsteryCat, upholsteryVariant);
   }
 
-
   scene.add(group);
   sceneObjects.push(group);
   buildDimensions(group);
-  currentXPosition += 10;
 
   buildTotalDimensions();
 }
-
-
 // ===================================================
 // КЛИК ПО СЦЕНЕ
 // ===================================================
