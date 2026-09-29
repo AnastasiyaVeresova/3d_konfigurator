@@ -744,12 +744,16 @@ function addSection(type) {
   const scaledWidth = originalSize.x * scaleValue;
   const scaledOffsetX = originalOffset.x * scaleValue;
 
-  model.traverse((child) => {
-    if (child.isMesh) child.castShadow = true;
-  });
+
 
   const group = new THREE.Group();
   group.add(model);
+
+  group.castShadow = true;
+group.receiveShadow = true;
+  model.traverse((child) => {
+    if (child.isMesh) child.castShadow = true; child.receiveShadow = true;
+  });
 
   // --- Размещение с учётом смещения модели ---
   // Левый край новой секции = правый край предыдущей
@@ -2107,22 +2111,39 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   });
 
 // Свет
-const ambient = new THREE.AmbientLight(0xffffff, 0.8);
-scene.add(ambient);
+scene.background = new THREE.Color(0xffffff); // нейтральный фон
 
-const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
-dirLight.position.set(0, 100, 0);
-dirLight.castShadow = true;
-dirLight.shadow.mapSize.width = 2048;
-dirLight.shadow.mapSize.height = 2048;
-dirLight.shadow.camera.near = 50;
-dirLight.shadow.camera.far = 3000;
-dirLight.shadow.camera.left = -1000;
-dirLight.shadow.camera.right = 1000;
-dirLight.shadow.camera.top = 1000;
-dirLight.shadow.camera.bottom = -1000;
-dirLight.shadow.bias = -0.001;
-scene.add(dirLight);
+// 2. Окружающий свет (мягкий, без теней)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); // цвет, интенсивность
+scene.add(ambientLight);
+
+// 3. Направленный свет (солнце) — именно он даёт тени
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(100, 100, 50); // направление света: сверху-сбоку
+directionalLight.castShadow = true;
+
+// Настройка области теней
+directionalLight.shadow.camera.left = -50;
+directionalLight.shadow.camera.right = 50;
+directionalLight.shadow.camera.top = 50;
+directionalLight.shadow.camera.bottom = -50;
+directionalLight.shadow.camera.near = 0.1;
+directionalLight.shadow.camera.far = 200;
+
+// Качество и мягкость теней
+directionalLight.shadow.mapSize.width = 2048; // 2K — хороший баланс качества/производительности
+directionalLight.shadow.mapSize.height = 2048;
+directionalLight.shadow.type = THREE.PCFSoftShadowMap; // мягкие, размытые края
+directionalLight.shadow.bias = 0.015; // небольшой bias, чтобы не было «плавающих» артефактов
+
+scene.add(directionalLight);
+
+// Опционально: второй направленный свет с другой стороны (заполняющий)
+const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+fillLight.position.set(-50, 80, -30);
+fillLight.castShadow = false; // заполняющий свет обычно без теней
+scene.add(fillLight);
+
 
 // Пол 
 const floor = createGridFloor();
