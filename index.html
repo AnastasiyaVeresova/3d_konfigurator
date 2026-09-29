@@ -2328,7 +2328,6 @@ document.getElementById('rotate-left').onclick = () => {
 document.getElementById('rotate-right').onclick = () => {
     if (selectedObject) { saveState(); selectedObject.rotation.y -= Math.PI / 8; snapToNeighbors(selectedObject); updateSliders(); buildTotalDimensions();}
 };
-
   document.getElementById('move-left').onclick = () => {
     if (selectedObject) { saveState(); selectedObject.position.x -= 1; snapToNeighbors(selectedObject); updateSliders(); ; buildTotalDimensions();}
   };
@@ -2500,8 +2499,11 @@ document.getElementById('delete-object').onclick = () => {
 //   content.classList.toggle('open');
 // };
 
+
+
 document.getElementById('toggle-snap').addEventListener('click', () => {
   snapEnabled = !snapEnabled;
+  snapBtn.classList.toggle('active');
   const btn = document.getElementById('toggle-snap');
   if (snapEnabled) {
     btn.style.color = '#96C22B'; // цвет, когда включено
@@ -2511,6 +2513,12 @@ document.getElementById('toggle-snap').addEventListener('click', () => {
     btn.querySelector('svg').style.stroke = '#888';
   }
 });
+
+const snapBtn = document.getElementById('toggle-snap');
+if (snapBtn) {
+  snapBtn.classList.add('active');
+}
+
 
 
   document.getElementById('toggle-dimensions').onclick = () => {
