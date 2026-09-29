@@ -380,7 +380,7 @@ let selectedObject = null;
 let transformControls;
 let currentObject = null;
 let currentXPosition = 0;
-const SNAP_THRESHOLD = 3.0;
+const SNAP_THRESHOLD = 1.0;
 let isDragging = false;
 let snapEnabled = true;
 
@@ -2013,14 +2013,14 @@ function buildTotalDimensions() {
 }
 
 function createGridFloor() {
-  const size = 200;          // 20×20 м (1 м = 100 единиц)
-  const cellSize = 10;       // 1 метр
-  const repeatCount = size / cellSize; // 20 повторов
+  const size = 200;          
+  const cellSize = 10;       
+  const repeatCount = size / cellSize; 
 
   const geometry = new THREE.PlaneGeometry(size, size);
   geometry.rotateX(-Math.PI / 2);
 
-  // Создаём текстуру-сетку
+  // --- ТВОЯ ЛОГИКА ТЕКСТУРЫ (без изменений) ---
   const canvas = document.createElement('canvas');
   canvas.width = 512;
   canvas.height = 512;
@@ -2031,15 +2031,12 @@ function createGridFloor() {
 
   ctx.strokeStyle = '#555555';
   ctx.lineWidth = 1;
-  // Рисуем рамку одной клетки — это будет повторяться
   ctx.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
-  // ВАЖНО: repeat ставим ДО создания материала
   texture.repeat.set(repeatCount, repeatCount);
-  // Чтобы не было размытия при масштабировании
   texture.minFilter = THREE.LinearFilter;
   texture.magFilter = THREE.LinearFilter;
 
@@ -2053,6 +2050,20 @@ function createGridFloor() {
   const floor = new THREE.Mesh(geometry, material);
   floor.name = 'grid-floor';
   floor.receiveShadow = true;
+
+  // =======================================================
+  // 👇 ВОТ ЗДЕСЬ ДОБАВЛЯЕМ СДВИГ
+  // Формат: .position.set(X, Y, Z)
+  // Y оставляем 0, так как пол должен лежать на земле.
+  // Меняем X и Z, чтобы сдвинуть сетку относительно центра (0,0,0).
+  
+  floor.position.set(-30, 0, 0.44); 
+  
+  // Например:
+  // -10 по X сдвинет сетку влево на 1 метр (т.к. клетка = 10 единиц)
+  // -10 по Z сдвинет сетку "вглубь" (ближе к камере или дальше, зависит от ракурса)
+  // =======================================================
+
   scene.add(floor);
 
   return floor;
@@ -2070,7 +2081,9 @@ function init() {
 
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
   camera.position.set(0, 50, 100);
-  camera.lookAt(0, 0, 0);
+  // camera.lookAt(0, 0, 0);
+    camera.position.set(-10, 20, 25);
+
 
 renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.shadowMap.enabled = true;
@@ -2146,14 +2159,19 @@ scene.add(fillLight);
 // Пол 
 const floor = createGridFloor();
 // Плоскость теней (прозрачная, только тень)
+const floorSize = 2000;
+
 const shadowPlane = new THREE.Mesh(
-  new THREE.PlaneGeometry(2000, 2000),
+  new THREE.PlaneGeometry(floorSize, floorSize),
   new THREE.ShadowMaterial({ opacity: 0.15, color: 0x1a1a1a })
 );
+
+// Сдвигаем так, чтобы угол был в (0,0,0), а не центр
+shadowPlane.position.set(-floorSize / 2, 0.8, -floorSize / 2); 
 shadowPlane.rotation.x = -Math.PI / 2;
-shadowPlane.position.y = 0.1;
 shadowPlane.receiveShadow = true;
 scene.add(shadowPlane);
+
 
 
 
