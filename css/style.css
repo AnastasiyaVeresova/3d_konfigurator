@@ -35,19 +35,33 @@
 #ui-panel h3:first-child { margin-top: 0; }
 
 /* Тултипы */
-[data-tooltip] { position: relative; }
-[data-tooltip]:hover::after {
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
-  background: #3D4555; color: #fff; padding: 5px 10px; border-radius: 2px;
-  white-space: nowrap; font-size: 11px; pointer-events: none; z-index: 100;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
 }
-[data-tooltip]:hover::before {
-  content: ''; position: absolute;
-  bottom: calc(100% + 1px); left: 50%; transform: translateX(-50%);
-  border: 5px solid transparent; border-top-color: #3D4555; z-index: 100;
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
+
 
 /* Контейнер для двух кнопок на всю ширину */
 .add-section-row {
@@ -61,7 +75,7 @@
   margin-bottom: 16px; /* Отступ до следующего элемента */
 }
 .icon-btn-1 {
-  border: 1px solid #ddd; border-radius: 6px;
+  border: 2px solid #ddd; border-radius: 6px;
   background: #fff; cursor: pointer; display: flex; align-items: center;
   justify-content: center; transition: 0.2s; padding: 0; flex-shrink: 1;
   
@@ -126,10 +140,10 @@
 
 /* Круги выбора цвета */
 .color-circle {
-  width: 36px; height: 36px; border-radius: 50%; border: 3px solid #ddd;
+  width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ddd;
   cursor: pointer; transition: 0.2s; flex-shrink: 1; position: relative;
 }
-.color-circle:hover { transform: scale(1.1); border-color: #96C22B; }
+.color-circle:hover { border-color: #96C22B; }
 .color-circle.active { border-color: #96C22B; box-shadow: 0 0 0 2px #96C22B; }
 
 /* Кружок-пикер (обёртка над скрытым input color) */
@@ -137,7 +151,7 @@
   position: relative; width: 36px; height: 36px; border-radius: 50%;
   cursor: pointer; flex-shrink: 0;
   background: conic-gradient(from 0deg, #e74c3c, #e67e22, #f1c40f, #2ecc71, #3498db, #9b59b6, #e74c3c);
-  border: 3px solid #ddd; transition: 0.2s;
+  border: 2px solid #ddd; transition: 0.2s;
 }
 .color-picker-wrap:hover { transform: scale(1.1); border-color: #96C22B; }
 .color-picker-wrap input[type="color"] {
@@ -152,7 +166,7 @@
 /* Выпадающий список */
 #ui-panel select {
   margin: 8px 0; width: 100%; padding: 10px; box-sizing: border-box; cursor: pointer;
-  border: 1px solid #ddd; border-radius: 6px; background: #fff; font-size: 11px;
+  border: 2px solid #ddd; border-radius: 6px; background: #fff; font-size: 11px;
 }
 
 /* Сетка кружков вариантов */
@@ -183,7 +197,7 @@
 /* Кнопки в нижней части панели */
 #ui-panel .panel-btn {
   margin: 6px 0; width: 100%; padding: 10px; box-sizing: border-box; cursor: pointer;
-  border: 1px solid #ddd; border-radius: 6px; background: #f0f0f0; color: #333;
+  border: 2px solid #ddd; border-radius: 6px; background: #f0f0f0; color: #333;
   transition: 0.2s; font-size: 13px;
 }
 #ui-panel .panel-btn:hover { background: #e0e0e0; }
@@ -211,12 +225,12 @@
 #ui-panel input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
   width: 15px; height: 15px; border-radius: 50%;
-  background: #96C22B; border: 3px solid #fff;
+  background: #96C22B; border: 2px solid #fff;
   box-shadow: 0 1px 4px rgba(0,0,0,0.3); cursor: pointer;
 }
 #ui-panel input[type="range"]::-moz-range-thumb {
   width: 15px; height: 15px; border-radius: 50%;
-  background: #96C22B; border: 3px solid #fff;
+  background: #96C22B; border: 2px solid #fff;
   box-shadow: 0 1px 4px rgba(0,0,0,0.3); cursor: pointer;
 }
 #ui-panel input[type="range"]::-moz-range-track {
@@ -236,7 +250,7 @@
 #object-controls select,
 #object-controls input[type="range"] {
   margin: 8px 0; width: 100%; padding: 10px; box-sizing: border-box;
-  cursor: pointer; border: 1px solid #ddd; border-radius: 6px; background: #fff;
+  cursor: pointer; border: 2px solid #ddd; border-radius: 6px; background: #fff;
 }
 /* #object-controls button { background: #f0f0f0; color: #333; transition: 0.2s; } */
 #object-controls button:hover { background: #e0e0e0; }
@@ -271,7 +285,7 @@
 }
 #object-controls .slider-input-row input[type="number"] {
   width: 39px; margin: 0; padding: 6px 8px; box-sizing: border-box;
-  border: 1px solid #ddd; border-radius: 6px; font-size: 12px;
+  border: 2px solid #ddd; border-radius: 6px; font-size: 12px;
   text-align: center; background: #fff; flex-shrink: 0;
 }
 #object-controls .slider-input-row input[type="number"]:focus {
@@ -323,7 +337,7 @@
   #object-controls select,
   #object-controls input[type="range"] {
     margin: 8px 0; width: 100%; padding: 10px; box-sizing: border-box;
-    cursor: pointer; border: 1px solid #ddd; border-radius: 6px; background: #fff;
+    cursor: pointer; border: 2px solid #ddd; border-radius: 6px; background: #fff;
   }
   #object-controls button {
     background: #f0f0f0; color: #333; transition: 0.2s;
@@ -369,7 +383,7 @@
     width: 15px; height: 15px;
     border-radius: 50%;
     background: #96C22B;
-    border: 3px solid #fff;
+    border: 2px solid #fff;
     box-shadow: 0 1px 4px rgba(0,0,0,0.3);
     cursor: pointer;
   }
@@ -447,7 +461,7 @@
 /* Раскрывающееся меню настроек фона */
 .collapse-trigger {
   width: 100%; padding: 8px 12px; box-sizing: border-box; cursor: pointer;
-  border: 1px solid #ddd; border-radius: 6px; background: #f0f0f0; color: #333;
+  border: 2px solid #ddd; border-radius: 6px; background: #f0f0f0; color: #333;
   transition: 0.2s; font-size: 13px; display: flex; align-items: center;
   justify-content: space-between;
 }
@@ -465,7 +479,7 @@
 
 .bg-scale-row { display: flex; gap: 8px; align-items: center; }
 .bg-scale-row button {
-  width: 36px; height: 36px; border: 1px solid #ddd; border-radius: 6px;
+  width: 36px; height: 36px; border: 2px solid #ddd; border-radius: 6px;
   background: #fff; cursor: pointer; display: flex; align-items: center;
   justify-content: center; transition: 0.2s; padding: 0; font-size: 18px; flex-shrink: 0;
 }
