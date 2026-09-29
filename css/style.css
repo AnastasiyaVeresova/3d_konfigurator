@@ -23,7 +23,7 @@
   position: fixed;
     left: 0;
     top: 0;
-    width: 245px;
+    width: 260px;
     height: auto;
     overflow-y: auto;
     padding: 12px 20px;
@@ -388,6 +388,14 @@
 .upholstery-row select {
   flex: 1; margin: 0;
 }
+
+#toggle-snap svg {
+  transform: translate(2px, 0px); 
+}
+.toggle-snap:hover { border-color: #96C22B; background: #f8fdf3; }
+.toggle-snap:hover span { color: #96C22B; }
+.toggle-snap.active { border-color: #96C22B; background: #eef7e3; }
+.toggle-snap.active span { color: #96C22B; }
 
 .icon-label-row {
   display: flex; gap: 10px; flex-wrap: wrap;

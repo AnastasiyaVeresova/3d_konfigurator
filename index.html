@@ -203,10 +203,14 @@
         <line x1="34" y1="30" x2="34" y2="40"/>
       </svg>
     </button>
-  </div>
-
-  <!-- ПРАВАЯ ГРУППА: Экспорт -->
-  <div class="panel-group-right">
+    <button id="toggle-snap" class="icon-btn" data-tooltip="Привязка">
+  <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 12 L36 36"/>
+    <path d="M36 12 L12 36"/>
+    <circle cx="24" cy="24" r="10" fill="none"/>
+  </svg>
+  <span style="margin-left:6px; font-size:12px;"></span>
+</button>
     <button class="icon-btn" id="export-model" data-tooltip="Экспорт сцены (.gltf)">
       <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M24 8 L24 30"/>
@@ -222,7 +226,13 @@
         <path d="M10 30 L18 24 L24 30 L30 22 L38 32 L38 36 L10 36 Z"/>
       </svg>
     </button>
+
   </div>
+
+  <!-- ПРАВАЯ ГРУППА: Экспорт -->
+  <!-- <div class="panel-group-right">
+
+  </div> -->
 </div>
 
 
@@ -377,6 +387,7 @@ let currentObject = null;
 let currentXPosition = 0;
 const SNAP_THRESHOLD = 3.0;
 let isDragging = false;
+let snapEnabled = true;
 
 const objectControlsDiv = document.getElementById('object-controls');
 const rotYSlider = document.getElementById('rotation-y-slider');
@@ -659,9 +670,12 @@ function loadModels() {
         modelsLoaded = true;
         console.log('✅ Все модели загружены');
         saveState();
+        
       }
     }, undefined, (error) => console.error('Ошибка загрузки модели:', key, error));
   });
+
+
 }
 
 // ===================================================
@@ -718,6 +732,7 @@ model.traverse((child) => {
   const group = new THREE.Group();
   group.add(model);
   group.position.set(currentXPosition, 0, 0);
+  
 
   // const frameHexStr = document.getElementById('frame-color').value;
   // const upholsteryHexStr = document.getElementById('upholstery-color').value;
@@ -1022,10 +1037,17 @@ function getObjBox(obj) {
       if (mesh.isMesh && mesh.geometry) {
         if (mesh.geometry.boundingBox === null) mesh.geometry.computeBoundingBox();
         const bb = mesh.geometry.boundingBox;
-        if (bb) {
-          v.copy(bb.min); mesh.localToWorld(v); box.expandByPoint(v);
-          v.copy(bb.max); mesh.localToWorld(v); box.expandByPoint(v);
-        }
+if (bb) {
+  v.set(bb.min.x, bb.min.y, bb.min.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.max.x, bb.min.y, bb.min.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.min.x, bb.max.y, bb.min.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.max.x, bb.max.y, bb.min.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.min.x, bb.min.y, bb.max.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.max.x, bb.min.y, bb.max.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.min.x, bb.max.y, bb.max.z); mesh.localToWorld(v); box.expandByPoint(v);
+  v.set(bb.max.x, bb.max.y, bb.max.z); mesh.localToWorld(v); box.expandByPoint(v);
+}
+
       }
     });
   });
@@ -1071,7 +1093,7 @@ function snapToNeighbors(draggedObj) {
   if (innerBox.min.x >= innerBox.max.x) innerBox.min.x = draggedBox.min.x;
   if (innerBox.min.z >= innerBox.max.z) innerBox.min.z = draggedBox.min.z;
 
-  // --- Фаза 1: Выталкивание ---
+  // --- Фаза 1: Выталкивание (РАБОТАЕТ ВСЕГДА) ---
   sceneObjects.forEach(obj => {
     if (obj === draggedObj) return;
     obj.updateMatrixWorld(true);
@@ -1102,6 +1124,9 @@ function snapToNeighbors(draggedObj) {
       innerBox.min.z += COLLISION_PADDING; innerBox.max.z -= COLLISION_PADDING;
     }
   });
+
+  // --- Фазы 2 и 3: Притяжение (ТОЛЬКО если snapEnabled) ---
+  if (!snapEnabled) return;
 
   // --- Фаза 2: Притяжение по грани ---
   let snapX = null, snapZ = null;
@@ -2054,7 +2079,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     if (isDragging) {
       preDragState = capturePositions();
     } else {
-      if (selectedObject && transformControls.getMode() === 'translate') {
+      if (selectedObject) {
         snapToNeighbors(selectedObject);
         updateSliders();
       }
@@ -2297,12 +2322,13 @@ document.getElementById('mode-rotate').onclick = () => {
 
 
   // Кнопки управления объектом
-  document.getElementById('rotate-left').onclick = () => {
-    if (selectedObject) { saveState(); selectedObject.rotation.y += Math.PI / 8; updateSliders(); ; buildTotalDimensions();}
-  };
-  document.getElementById('rotate-right').onclick = () => {
-    if (selectedObject) { saveState(); selectedObject.rotation.y -= Math.PI / 8; updateSliders(); ; buildTotalDimensions();}
-  };
+document.getElementById('rotate-left').onclick = () => {
+    if (selectedObject) { saveState(); selectedObject.rotation.y += Math.PI / 8; snapToNeighbors(selectedObject); updateSliders(); buildTotalDimensions();}
+};
+document.getElementById('rotate-right').onclick = () => {
+    if (selectedObject) { saveState(); selectedObject.rotation.y -= Math.PI / 8; snapToNeighbors(selectedObject); updateSliders(); buildTotalDimensions();}
+};
+
   document.getElementById('move-left').onclick = () => {
     if (selectedObject) { saveState(); selectedObject.position.x -= 1; snapToNeighbors(selectedObject); updateSliders(); ; buildTotalDimensions();}
   };
@@ -2340,6 +2366,13 @@ document.getElementById('delete-object').onclick = () => {
       rotYInput.value = rotYSlider.value;
     }
   };
+  rotYSlider.onchange = () => {
+    if (currentObject) {
+        snapToNeighbors(currentObject);
+        buildTotalDimensions();
+    }
+};
+
   rotYInput.oninput = () => {
     if (currentObject) {
       let val = parseFloat(rotYInput.value);
@@ -2349,6 +2382,13 @@ document.getElementById('delete-object').onclick = () => {
       rotYSlider.value = val;
     }
   };
+  rotYInput.onchange = () => {
+    if (currentObject) {
+        snapToNeighbors(currentObject);
+        buildTotalDimensions();
+    }
+};
+
 
   // posYSlider.oninput = () => {
   //   if (currentObject) {
@@ -2460,6 +2500,17 @@ document.getElementById('delete-object').onclick = () => {
 //   content.classList.toggle('open');
 // };
 
+document.getElementById('toggle-snap').addEventListener('click', () => {
+  snapEnabled = !snapEnabled;
+  const btn = document.getElementById('toggle-snap');
+  if (snapEnabled) {
+    btn.style.color = '#96C22B'; // цвет, когда включено
+    btn.querySelector('svg').style.stroke = '#96C22B';
+  } else {
+    btn.style.color = '#888';
+    btn.querySelector('svg').style.stroke = '#888';
+  }
+});
 
 
   document.getElementById('toggle-dimensions').onclick = () => {
