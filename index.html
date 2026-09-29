@@ -142,7 +142,7 @@
       <input type="color" id="frame-color" value="#888888" />
     </div> -->
     <div class="color-circle" id="frame-color-black"
-         style="background:#252525;"
+         style="background:#101010;"
          data-tooltip="Чёрный"></div>
     <div class="color-circle" id="frame-color-gray"
          style="background:#888888;"
@@ -570,7 +570,7 @@ function highlightObject(object, on) {
         if (child.userData.origEmissive === undefined) {
           child.userData.origEmissive = child.material.emissive
             ? child.material.emissive.getHex()
-            : 0x000000;
+            : 0x1a1a1a;
         }
         child.material.emissive = new THREE.Color(0x004400);
         child.material.emissiveIntensity = 0.5;
@@ -731,7 +731,7 @@ function addSection(type) {
       }
       child.material.metalness = 0;
       child.material.roughness = 0.7;
-      child.material.emissive = new THREE.Color(0x000000);
+      child.material.emissive = new THREE.Color(0x1a1a1a);
       child.material.needsUpdate = true;
       child.userData.originalColor = child.material.color.getHex();
     }
@@ -2150,7 +2150,7 @@ const floor = createGridFloor();
 // Плоскость теней (прозрачная, только тень)
 const shadowPlane = new THREE.Mesh(
   new THREE.PlaneGeometry(2000, 2000),
-  new THREE.ShadowMaterial({ opacity: 0.15, color: 0x000000 })
+  new THREE.ShadowMaterial({ opacity: 0.15, color: 0x1a1a1a })
 );
 shadowPlane.rotation.x = -Math.PI / 2;
 shadowPlane.position.y = 0.1;
@@ -2189,7 +2189,7 @@ scene.add(shadowPlane);
   document.getElementById('frame-color-black').addEventListener('click', () => {
   if (selectedObject) {
     saveState();
-    const count = changeColorByType(selectedObject, 'frame', 0x252525);
+    const count = changeColorByType(selectedObject, 'frame', 0x1a1a1a);
     console.log(`Перекрашено мешей каркаса: ${count}`);
   } 
 });
@@ -2205,16 +2205,16 @@ document.getElementById('frame-color-gray').addEventListener('click', () => {
 
   // Цвет каркаса — быстрые кнопки
 document.getElementById('frame-color-black').onclick = () => {
-  const colorHex = 0x000000;
+  const colorHex = 0x1a1a1a;
   if (selectedObject) {
     saveState();
-    selectedObject.userData.frameColor = '#000000';
+    selectedObject.userData.frameColor = '#111111';
     // changeColorByType(selectedObject, 'frame', colorHex);
   } else {
     saveState();
     updateColorForAllSceneObjects('frame', colorHex);
   }
-  // document.getElementById('frame-color').value = '#000000';
+  // document.getElementById('frame-color').value = '#1a1a1a';
   document.getElementById('frame-color-black').classList.add('active');
   document.getElementById('frame-color-gray').classList.remove('active');
 };
