@@ -1975,7 +1975,7 @@
         directionalLight.shadow.camera.near = 0.1;
         directionalLight.shadow.camera.far = 200;
         // Качество и мягкость теней
-        directionalLight.shadow.mapSize.width = 2048; // 2K — хороший баланс качества/производительности
+        directionalLight.shadow.mapSize.width = 2048; 
         directionalLight.shadow.mapSize.height = 2048;
         directionalLight.shadow.type = THREE.PCFSoftShadowMap; // мягкие, размытые края
         directionalLight.shadow.bias = 0.015; // небольшой bias, чтобы не было «плавающих» артефактов
@@ -1983,7 +1983,7 @@
         // второй направленный свет с другой стороны (заполняющий)
         const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
         fillLight.position.set(-50, 80, -30);
-        fillLight.castShadow = false; // заполняющий свет обычно без теней
+        fillLight.castShadow = false; // заполняющий свет без теней
         scene.add(fillLight);
         // Пол 
         const floor = createGridFloor();
@@ -1991,11 +1991,11 @@
         const floorSize = 2000;
         const shadowPlane = new THREE.Mesh(
           new THREE.PlaneGeometry(floorSize, floorSize),
-          new THREE.ShadowMaterial({ opacity: 0.15, color: 0x1a1a1a })
+          new THREE.ShadowMaterial({ opacity: 0.05, color: 0x1a1a1a })
         );
         // Сдвигаем так, чтобы угол был в (0,0,0), а не центр
         shadowPlane.position.set(-floorSize / 2, 0.8, -floorSize / 2);
-        shadowPlane.rotation.x = -Math.PI / 2;
+        shadowPlane.rotation.x = -Math.PI;
         shadowPlane.receiveShadow = true;
         scene.add(shadowPlane);
         // Загрузка моделей
