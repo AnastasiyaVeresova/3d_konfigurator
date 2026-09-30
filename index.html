@@ -8,68 +8,6 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- <div id="ui-panel">
-  <h3>Добавить секцию</h3>
-  <button id="add-straight">Прямая секция</button>
-  <button id="add-corner">Угловая секция</button>
-
-  <h3>Цвет каркаса</h3>
-  <input type="color" id="frame-color" value="#888888" />
-  <div class="btn-row">
-    <button id="frame-color-black">Чёрный</button>
-    <button id="frame-color-gray">Серый</button>
-  </div>
-
-<h3>Цвет обивки</h3>
-<input type="color" id="upholstery-color" value="#ffffff" />
-
-<label>Категория материала</label>
-<select id="upholstery-category">
-  <option value="none">Без текстуры</option>
-  <option value="santorini">Экокожа Santorini</option>
-  <option value="moderno">Ткань Moderno</option>
-  <option value="velutto">Ткань Velutto</option>
-  <option value="velton">Ткань Велтон</option>
-  <option value="umbra">Ткань Умбра</option>
-</select>
-<label>Вариант / цвет</label>
-<select id="upholstery-variant"></select>
-<img id="upholstery-preview"
-     src=""
-     alt="превью"
-     style="display:none; width:100%; margin-top:8px; border-radius:6px; border:1px solid #ddd;" />
-     <h3>Размеры</h3>
-<button id="toggle-dimensions">Показать размеры</button>
-  <h3>История действий</h3>
-  <div class="btn-row">
-    <button id="undo-action">⏪ Отменить (ctrl+Z)</button>
-    <button id="redo-action">⏩ Повторить (ctrl+Y)</button>
-  </div>
-  <h3>Фон сцены</h3>
-<button id="bg-upload-btn">Загрузить изображение</button>
-<input type="file" id="bg-file-input" accept="image/*" style="display:none" />
-<h3>Настройки фона</h3>
-<div class="btn-row">
-  <button id="bg-scale-plus">+</button>
-  <button id="bg-scale-minus">-</button>
-</div>
-<input type="range" id="bg-scale-slider" min="0.5" max="3" step="0.1" value="1" />
-<label for="bg-scale-slider">Масштаб: <span id="bg-scale-value">1.0</span></label>
-<div class="btn-row">
-  <button id="bg-move-left">←</button>
-  <button id="bg-move-right">→</button>
-</div>
-<div class="btn-row">
-  <button id="bg-move-up">↑</button>
-  <button id="bg-move-down">↓</button>
-</div>
-<button id="bg-reset-btn">Сбросить фон</button>
-<button id="toggle-floor">Скрыть/показать пол</button>
-<h3>Экспорт сцены</h3>
-<button id="export-model">Экспортировать сцену (.gltf)</button>
-<button id="export-png">Экспорт PNG (прозрачный фон)</button>
-</div> -->
-
   <div id="ui-panel">
     <h3>Секции, история</h3>
     <div class="add-section-row">
@@ -119,22 +57,6 @@
         </svg>
       </button>
     </div>
-
-    <!-- <div class="icon-row">
-  <button class="icon-btn" id="undo-action" data-tooltip="Ctrl+Z">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 20 L8 26 L14 32"/>
-      <path d="M8 26 L28 26 Q38 26 38 36 L38 38"/>
-    </svg>
-  </button>
-  <button class="icon-btn" id="redo-action" data-tooltip="Ctrl+Y">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M34 20 L40 26 L34 32"/>
-      <path d="M40 26 L20 26 Q10 26 10 36 L10 38"/>
-    </svg>
-  </button>
-</div> -->
-
     <h3>Каркас</h3>
     <div class="icon-row">
       <!-- <div class="color-picker-wrap">
@@ -221,34 +143,8 @@
             <path d="M10 30 L18 24 L24 30 L30 22 L38 32 L38 36 L10 36 Z" />
           </svg>
         </button>
-      </div>
-      <!-- ПРАВАЯ ГРУППА: Экспорт -->
-      <!-- <div class="panel-group-right">
-  </div> -->
-    </div>
-    <!-- <input type="file" id="bg-file-input" accept="image/*" style="display:none" /> -->
-    <!-- <h3 class="collapse-h3" id="bg-settings-trigger">
-  Настройки фона
-  <span class="arrow">▼</span>
-</h3>
-<div class="collapse-content" id="bg-settings-content">
-  <div class="collapse-content-inner">
-    <div class="bg-scale-row">
-      <button id="bg-scale-plus">+</button>
-      <button id="bg-scale-minus">−</button>
-      <input type="range" id="bg-scale-slider" min="0.5" max="3" step="0.1" value="1" style="flex:1;" />
-    </div>
-    <label for="bg-scale-slider" style="font-size:12px;color:#666;margin:6px 0 4px;display:block;">
-      Масштаб: <span id="bg-scale-value">1.0</span>
-    </label>
-    <div class="bg-move-grid">
-      <button id="bg-move-left">←</button>
-      <button id="bg-move-right">→</button>
-            <button id="bg-move-up">↑</button>
-      <button id="bg-move-down">↓</button>
-    </div>
-  </div>
-</div> -->
+      </div>   
+    </div> 
     <br>
     <div id="object-controls">
       <h3>Управление объектом</h3>
@@ -296,37 +192,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="slider-row">
-    <label>Позиция Z</label>
-    <div class="slider-input-row">
-      <input type="range" id="position-y-slider" min="-10" max="10" value="0" step="0.1" />
-      <input type="number" id="position-y-input" min="-10" max="10" value="0" step="0.1" />
-    </div>
-  </div> -->
-      <!-- </div> -->
-      <br>
-      <!-- <div>
-  <label>Режим трансформации</label>
-  <div class="icon-row">
-    <button class="icon-btn" id="mode-translate" data-tooltip="Перемещение">
-      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M24 8 L24 40"/>
-        <path d="M8 24 L40 24"/>
-        <path d="M18 14 L24 8 L30 14"/>
-        <path d="M14 18 L8 24 L14 30"/>
-        <path d="M18 34 L24 40 L30 34"/>
-        <path d="M34 18 L40 24 L34 30"/>
-      </svg>
-    </button>
-    <button class="icon-btn" id="mode-scale" data-tooltip="Масштаб">
-      <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="10" y="10" width="14" height="14" rx="2"/>
-        <rect x="24" y="24" width="14" height="14" rx="2"/>
-        <path d="M20 20 L28 28"/>
-      </svg>
-    </button>
-  </div>
-</div> -->
+      <br>    
       <button id="delete-object">🗑 Удалить</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.js"></script>
@@ -435,9 +301,7 @@
         if (btnRedo) btnRedo.classList.toggle('disabled-btn', redoStack.length === 0);
       }
 
-      // ===================================================
       // УТИЛИТЫ
-      // ===================================================
       function hexStringToNumber(hexStr) {
         return parseInt(hexStr.slice(1), 16);
       }
@@ -476,23 +340,16 @@
             child.userData.originalColor = colorHex;
             child.userData.hasOriginalTexture = !!child.material.map;
             // Поворачиваем встроенную текстуру
-            if (child.userData.hasOriginalTexture) {
-              const tex = child.material.map;
-              tex.center.set(0.5, 0.5);
-              tex.rotation = THREE.MathUtils.degToRad(0);
-              // Получаем габариты меша
-              const box = new THREE.Box3().setFromObject(child);
-              const size = {
-                x: box.max.x - box.min.x,
-                z: box.max.z - box.min.z
-              };
-              // Базовая плотность текстуры: например, 1 повтор на 1 метр
-              const baseSize = 1.0; // метр
-              const repeatX = size.x / baseSize;
-              const repeatZ = size.z / baseSize;
-              tex.repeat.set(repeatX, repeatZ);
-              tex.needsUpdate = true;
-            }
+           if (child.userData.hasOriginalTexture && child.userData.type === 'upholstery') {
+  const tex = child.material.map;
+  tex.center.set(0.5, 0.5);
+  tex.rotation = THREE.MathUtils.degToRad(0);
+  const box = new THREE.Box3().setFromObject(child);
+  const size = { x: box.max.x - box.min.x, z: box.max.z - box.min.z };
+  const baseSize = 1.0;
+  tex.repeat.set(size.x / baseSize, size.z / baseSize);
+  tex.needsUpdate = true;
+}
             const colorStr = '0x' + colorHex.toString(16).toUpperCase().padStart(6, '0');
             const meshName = child.name || '(без имени)';
             const hasTex = child.material.map ? ' [с текстурой]' : '';
@@ -543,9 +400,7 @@
         });
       }
 
-      // ===================================================
       // ВЫДЕЛЕНИЕ ОБЪЕКТА
-      // ===================================================
       function highlightObject(object, on) {
         object.traverse((child) => {
           if (child.isMesh) {
@@ -574,13 +429,6 @@
         }
         selectedObject = object;
         currentObject = object;
-
-        // if (object.userData.frameColor) {
-        //   document.getElementById('frame-color').value = object.userData.frameColor;
-        // }
-        // if (object.userData.upholsteryColor) {
-        //   document.getElementById('upholstery-color').value = object.userData.upholsteryColor;
-        // }
 
         // Восстанавливаем категорию и вариант текстуры
         if (object.userData.upholsteryCategory) {
@@ -632,10 +480,6 @@
           // document.getElementById('position-y-input').value = posY;
         }
       }
-
-      // ===================================================
-      // ЗАГРУЗКА МОДЕЛЕЙ
-      // ===================================================
       function loadModels() {
         const keys = Object.keys(modelsPaths);
         let loadedCount = 0;
@@ -665,9 +509,6 @@
         });
       }
 
-      // ===================================================
-      // ДОБАВЛЕНИЕ СЕКЦИИ
-      // ===================================================
       function addSection(type) {
         if (!modelsLoaded) {
           alert('Модели ещё не загружены, подождите.');
@@ -738,9 +579,6 @@
         buildTotalDimensions();
       }
 
-      // ===================================================
-      // КЛИК ПО СЦЕНЕ
-      // ===================================================
       function onMouseClick(event) {
         if (event.target.closest('#ui-panel') || event.target.closest('#object-controls')) return;
         const mouse = new THREE.Vector2(
@@ -764,9 +602,6 @@
         }
       }
 
-      // ===================================================
-      // ЭКСПОРТ
-      // ===================================================
       function exportScene() {
         deselectObject();
         const exporter = new THREE.GLTFExporter();
@@ -782,219 +617,8 @@
         }, { binary: false });
       }
 
-      // ===================================================
-      // ПРИВЯЗКА ОБЪЕКТОВ И ЗАПРЕТ ПЕРЕСЕЧЕНИЙ
-      // ===================================================
-      // function snapToNeighbors(draggedObj) {
-      //   if (!draggedObj) return;
-      //   draggedObj.updateMatrixWorld(true);
-      //   let draggedBox = new THREE.Box3().setFromObject(draggedObj);
-
-      //   // --- Фаза 1: Выталкивание при пересечении ---
-      //   sceneObjects.forEach(obj => {
-      //     if (obj === draggedObj) return;
-      //     obj.updateMatrixWorld(true);
-      //     const objBox = new THREE.Box3().setFromObject(obj);
-
-      //     const xOv = draggedBox.min.x < objBox.max.x && draggedBox.max.x > objBox.min.x;
-      //     const zOv = draggedBox.min.z < objBox.max.z && draggedBox.max.z > objBox.min.z;
-
-      //     if (xOv && zOv) {
-      //       const pushR = objBox.max.x - draggedBox.min.x;
-      //       const pushL = draggedBox.max.x - objBox.min.x;
-      //       const pushF = objBox.max.z - draggedBox.min.z;
-      //       const pushB = draggedBox.max.z - objBox.min.z;
-
-      //       const minPush = Math.min(pushR, pushL, pushF, pushB);
-
-      //       if (minPush === pushR)      draggedObj.position.x += pushR;
-      //       else if (minPush === pushL) draggedObj.position.x -= pushL;
-      //       else if (minPush === pushF) draggedObj.position.z += pushF;
-      //       else                        draggedObj.position.z -= pushB;
-
-      //       draggedObj.updateMatrixWorld(true);
-      //       draggedBox.setFromObject(draggedObj);
-      //     }
-      //   });
-
-      //   // --- Фаза 2: Притяжение к ближайшей грани ---
-      //   let snapX = null, snapZ = null;
-      //   let minDistX = SNAP_THRESHOLD, minDistZ = SNAP_THRESHOLD;
-
-      //   sceneObjects.forEach(obj => {
-      //     if (obj === draggedObj) return;
-      //     const objBox = new THREE.Box3().setFromObject(obj);
-
-      //     const zOverlap = draggedBox.min.z < objBox.max.z && draggedBox.max.z > objBox.min.z;
-      //     if (zOverlap) {
-      //       const gap1 = objBox.min.x - draggedBox.max.x;
-      //       if (gap1 >= 0 && gap1 < minDistX) {
-      //         minDistX = gap1;
-      //         snapX = draggedObj.position.x + gap1;
-      //       }
-      //       const gap2 = draggedBox.min.x - objBox.max.x;
-      //       if (gap2 >= 0 && gap2 < minDistX) {
-      //         minDistX = gap2;
-      //         snapX = draggedObj.position.x - gap2;
-      //       }
-      //     }
-
-      //     const xOverlap = draggedBox.min.x < objBox.max.x && draggedBox.max.x > objBox.min.x;
-      //     if (xOverlap) {
-      //       const gap3 = objBox.min.z - draggedBox.max.z;
-      //       if (gap3 >= 0 && gap3 < minDistZ) {
-      //         minDistZ = gap3;
-      //         snapZ = draggedObj.position.z + gap3;
-      //       }
-      //       const gap4 = draggedBox.min.z - objBox.max.z;
-      //       if (gap4 >= 0 && gap4 < minDistZ) {
-      //         minDistZ = gap4;
-      //         snapZ = draggedObj.position.z - gap4;
-      //       }
-      //     }
-      //   });
-
-      //   if (snapX !== null) draggedObj.position.x = snapX;
-      //   if (snapZ !== null) draggedObj.position.z = snapZ;
-      // }
-
-      // ===================================================
-      // ПРИВЯЗКА ОБЪЕКТОВ И ЗАПРЕТ ПЕРЕСЕЧЕНИЙ
-      // ===================================================
-
       const COLLISION_PADDING = 0;
 
-      // function snapToNeighbors(draggedObj) {
-      //   if (!draggedObj) return;
-      //   draggedObj.updateMatrixWorld(true);
-      //   let draggedBox = new THREE.Box3().setFromObject(draggedObj);
-
-      //   // --- Фаза 1: Выталкивание при пересечении ---
-      //   sceneObjects.forEach(obj => {
-      //     if (obj === draggedObj) return;
-      //     obj.updateMatrixWorld(true);
-      //     const objBox = new THREE.Box3().setFromObject(obj);
-
-      //     const xOv = draggedBox.min.x < objBox.max.x && draggedBox.max.x > objBox.min.x;
-      //     const zOv = draggedBox.min.z < objBox.max.z && draggedBox.max.z > objBox.min.z;
-
-      //     if (xOv && zOv) {
-      //       const pushR = objBox.max.x - draggedBox.min.x;
-      //       const pushL = draggedBox.max.x - objBox.min.x;
-      //       const pushF = objBox.max.z - draggedBox.min.z;
-      //       const pushB = draggedBox.max.z - objBox.min.z;
-
-      //       const minPush = Math.min(pushR, pushL, pushF, pushB);
-
-      //       if (minPush === pushR)      draggedObj.position.x += pushR;
-      //       else if (minPush === pushL) draggedObj.position.x -= pushL;
-      //       else if (minPush === pushF) draggedObj.position.z += pushF;
-      //       else                        draggedObj.position.z -= pushB;
-
-      //       draggedObj.updateMatrixWorld(true);
-      //       draggedBox.setFromObject(draggedObj);
-      //     }
-      //   });
-
-      //   // --- Фаза 2: Притяжение по грани (когда объекты на одной линии) ---
-      //   let snapX = null, snapZ = null;
-      //   let minDistX = SNAP_THRESHOLD, minDistZ = SNAP_THRESHOLD;
-
-      //   sceneObjects.forEach(obj => {
-      //     if (obj === draggedObj) return;
-      //     const objBox = new THREE.Box3().setFromObject(obj);
-
-      //     const zOverlap = draggedBox.min.z < objBox.max.z && draggedBox.max.z > objBox.min.z;
-      //     if (zOverlap) {
-      //       const gap1 = objBox.min.x - draggedBox.max.x;
-      //       if (gap1 >= 0 && gap1 < minDistX) {
-      //         minDistX = gap1;
-      //         snapX = draggedObj.position.x + gap1;
-      //       }
-      //       const gap2 = draggedBox.min.x - objBox.max.x;
-      //       if (gap2 >= 0 && gap2 < minDistX) {
-      //         minDistX = gap2;
-      //         snapX = draggedObj.position.x - gap2;
-      //       }
-      //     }
-
-      //     const xOverlap = draggedBox.min.x < objBox.max.x && draggedBox.max.x > objBox.min.x;
-      //     if (xOverlap) {
-      //       const gap3 = objBox.min.z - draggedBox.max.z;
-      //       if (gap3 >= 0 && gap3 < minDistZ) {
-      //         minDistZ = gap3;
-      //         snapZ = draggedObj.position.z + gap3;
-      //       }
-      //       const gap4 = draggedBox.min.z - objBox.max.z;
-      //       if (gap4 >= 0 && gap4 < minDistZ) {
-      //         minDistZ = gap4;
-      //         snapZ = draggedObj.position.z - gap4;
-      //       }
-      //     }
-      //   });
-
-      //   if (snapX !== null) { draggedObj.position.x = snapX; draggedObj.updateMatrixWorld(true); draggedBox.setFromObject(draggedObj); }
-      //   if (snapZ !== null) { draggedObj.position.z = snapZ; draggedObj.updateMatrixWorld(true); draggedBox.setFromObject(draggedObj); }
-
-      //   // --- Фаза 3: Притяжение углов (corner-to-corner) ---
-      //   // Проверяем сближение угловых точек даже без общего перекрытия по оси
-      //   const CORNER_THRESHOLD = SNAP_THRESHOLD;
-      //   let bestCornerDist = CORNER_THRESHOLD;
-      //   let cornerDx = 0, cornerDz = 0;
-
-      //   // 4 угла draggedBox
-      //   const draggedCorners = [
-      //     { x: draggedBox.min.x, z: draggedBox.min.z },
-      //     { x: draggedBox.max.x, z: draggedBox.min.z },
-      //     { x: draggedBox.min.x, z: draggedBox.max.z },
-      //     { x: draggedBox.max.x, z: draggedBox.max.z }
-      //   ];
-
-      //   sceneObjects.forEach(obj => {
-      //     if (obj === draggedObj) return;
-      //     const objBox = new THREE.Box3().setFromObject(obj);
-
-      //     const objCorners = [
-      //       { x: objBox.min.x, z: objBox.min.z },
-      //       { x: objBox.max.x, z: objBox.min.z },
-      //       { x: objBox.min.x, z: objBox.max.z },
-      //       { x: objBox.max.x, z: objBox.max.z }
-      //     ];
-
-      //     // Проверяем только если нет перекрытия (угловая стыковка)
-      //     const hasXOverlap = draggedBox.min.x < objBox.max.x && draggedBox.max.x > objBox.min.x;
-      //     const hasZOverlap = draggedBox.min.z < objBox.max.z && draggedBox.max.z > objBox.min.z;
-
-      //     if (hasXOverlap && hasZOverlap) return; // пересечение — уже обработано в фазе 1
-      //     if (snapX !== null && hasZOverlap) return; // уже привязано по X с перекрытием по Z
-      //     if (snapZ !== null && hasXOverlap) return; // уже привязано по Z с перекрытием по X
-
-      //     draggedCorners.forEach(dc => {
-      //       objCorners.forEach(oc => {
-      //         const dx = oc.x - dc.x;
-      //         const dz = oc.z - dc.z;
-      //         const dist = Math.sqrt(dx * dx + dz * dz);
-
-      //         if (dist > 0.01 && dist < bestCornerDist) {
-      //           bestCornerDist = dist;
-      //           cornerDx = dx;
-      //           cornerDz = dz;
-      //         }
-      //       });
-      //     });
-      //   });
-
-      //   if (bestCornerDist < CORNER_THRESHOLD) {
-      //     draggedObj.position.x += cornerDx;
-      //     draggedObj.position.z += cornerDz;
-      //   }
-      // }
-
-
-      // ===================================================
-      // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ИСТОРИИ
-      // ===================================================
-      // Bounding box БЕЗ размерных линий
       function getObjBox(obj) {
         obj.updateMatrixWorld(true);
         const box = new THREE.Box3();
