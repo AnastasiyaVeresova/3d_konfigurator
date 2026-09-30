@@ -331,59 +331,54 @@
         uv.needsUpdate = true;
       }
 
-      function assignMeshTypes(model) {
-        const colorMap = {};
-        model.traverse((child) => {
-          if (child.isMesh) {
-            if (!child.userData) child.userData = {};
-            const colorHex = child.material.color.getHex();
-            child.userData.originalColor = colorHex;
-            child.userData.hasOriginalTexture = !!child.material.map;
-            // Поворачиваем встроенную текстуру
-            if (child.userData.hasOriginalTexture) {
-              const tex = child.material.map;
-              tex.center.set(0.5, 0.5);
-              tex.rotation = THREE.MathUtils.degToRad(0);
-              // Получаем габариты меша
-              const box = new THREE.Box3().setFromObject(child);
-              const size = {
-                x: box.max.x - box.min.x,
-                z: box.max.z - box.min.z
-              };
-              // Базовая плотность текстуры: например, 1 повтор на 1 метр
-              const baseSize = 1.0; // метр
-              const repeatX = size.x / baseSize;
-              const repeatZ = size.z / baseSize;
-              tex.repeat.set(repeatX, repeatZ);
-              tex.needsUpdate = true;
-            }
-            const colorStr = '0x' + colorHex.toString(16).toUpperCase().padStart(6, '0');
-            const meshName = child.name || '(без имени)';
-            const hasTex = child.material.map ? ' [с текстурой]' : '';
-            if (!colorMap[colorStr]) colorMap[colorStr] = { count: 0, meshes: [] };
-            colorMap[colorStr].count++;
-            colorMap[colorStr].meshes.push(meshName + hasTex);
-            let found = false;
-            for (const rule of COLOR_TYPE_RULES) {
-              if (rule.colors.includes(colorHex)) {
-                child.userData.type = rule.type;
-                found = true;
-                break;
-              }
-            }
-            if (!found) child.userData.type = 'undefined';
-            if (child.userData.type === 'upholstery') {
-              normalizeUVs(child.geometry);
-            }
-          }
-        });
+function assignMeshTypes(model) {
+  const colorMap = {};
 
-        const report = {};
-        for (const [color, data] of Object.entries(colorMap)) {
-          report[color] = `${data.count} мешей: ${data.meshes.join(', ')}`;
-        }
-        console.log('🎨 Базовые цвета модели:', report);
+  model.traverse((child) => {
+    if (child.isMesh) {
+      if (!child.userData) child.userData = {};
+      const colorHex = child.material.color.getHex();
+      child.userData.originalColor = colorHex;
+      child.userData.hasOriginalTexture = !!child.material.map;
+
+      // Поворачиваем встроенную текстуру
+      if (child.userData.hasOriginalTexture) {
+        const tex = child.material.map;
+        tex.center.set(0.5, 0.5);
+        tex.rotation = THREE.MathUtils.degToRad(0); // угол поворота
+        tex.repeat.set(2, 2);
+        // Смещение текстуры 
+        // tex.offset.x = 0.1;   // сдвиг по горизонтали
+        // tex.offset.y = -0.05;  // сдвиг по вертикали
+        tex.needsUpdate = true;
       }
+
+      const colorStr = '0x' + colorHex.toString(16).toUpperCase().padStart(6, '0');
+      const meshName = child.name || '(без имени)';
+      const hasTex = child.material.map ? ' [с текстурой]' : '';
+      if (!colorMap[colorStr]) colorMap[colorStr] = { count: 0, meshes: [] };
+      colorMap[colorStr].count++;
+      colorMap[colorStr].meshes.push(meshName + hasTex);
+
+      let found = false;
+      for (const rule of COLOR_TYPE_RULES) {
+        if (rule.colors.includes(colorHex)) {
+          child.userData.type = rule.type;
+          found = true;
+          break;
+        }
+      }
+      if (!found) child.userData.type = 'undefined';
+    }
+  });
+
+  const report = {};
+  for (const [color, data] of Object.entries(colorMap)) {
+    report[color] = `${data.count} мешей: ${data.meshes.join(', ')}`;
+  }
+  console.log('🎨 Базовые цвета модели:', report);
+}
+
 
       function changeColorByType(model, type, colorHex) {
         let changedCount = 0;
