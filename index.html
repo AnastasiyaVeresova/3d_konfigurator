@@ -340,16 +340,23 @@
             child.userData.originalColor = colorHex;
             child.userData.hasOriginalTexture = !!child.material.map;
             // Поворачиваем встроенную текстуру
-           if (child.userData.hasOriginalTexture && child.userData.type === 'upholstery') {
-  const tex = child.material.map;
-  tex.center.set(0.5, 0.5);
-  tex.rotation = THREE.MathUtils.degToRad(0);
-  const box = new THREE.Box3().setFromObject(child);
-  const size = { x: box.max.x - box.min.x, z: box.max.z - box.min.z };
-  const baseSize = 1.0;
-  tex.repeat.set(size.x / baseSize, size.z / baseSize);
-  tex.needsUpdate = true;
-}
+            if (child.userData.hasOriginalTexture) {
+              const tex = child.material.map;
+              tex.center.set(0.5, 0.5);
+              tex.rotation = THREE.MathUtils.degToRad(0);
+              // Получаем габариты меша
+              const box = new THREE.Box3().setFromObject(child);
+              const size = {
+                x: box.max.x - box.min.x,
+                z: box.max.z - box.min.z
+              };
+              // Базовая плотность текстуры: например, 1 повтор на 1 метр
+              const baseSize = 1.0; // метр
+              const repeatX = size.x / baseSize;
+              const repeatZ = size.z / baseSize;
+              tex.repeat.set(repeatX, repeatZ);
+              tex.needsUpdate = true;
+            }
             const colorStr = '0x' + colorHex.toString(16).toUpperCase().padStart(6, '0');
             const meshName = child.name || '(без имени)';
             const hasTex = child.material.map ? ' [с текстурой]' : '';
