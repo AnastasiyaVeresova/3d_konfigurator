@@ -110,6 +110,18 @@
       <circle cx="35" cy="36" r="2.5" fill="#888" stroke="none"/>
     </svg>
   </button>
+  <button class="icon-btn-1 half-btn" id="add-simple" data-tooltip="Без спинки">
+  <svg viewBox="0 0 48 48" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Основной контур секции -->
+    <rect x="10" y="14" width="28" height="16" rx="3"/>
+    <!-- Линия, обозначающая отсутствие спинки (тонкая, по центру) -->
+    <line x1="10" y1="22" x2="38" y2="22" stroke-width="1.5" stroke="#ccc"/>
+    <!-- Точки крепления/соединения (как в оригинале) -->
+    <circle cx="15" cy="34" r="2.5" fill="#888" stroke="none"/>
+    <circle cx="33" cy="34" r="2.5" fill="#888" stroke="none"/>
+  </svg>
+</button>
+
     <button class="icon-btn" id="redo-action" data-tooltip="Ctrl+Y">
     <svg viewBox="0 0 48 48" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
       <path d="M34 20 L40 26 L34 32"/>
@@ -355,7 +367,8 @@ const sceneObjects = [];
 const loader = new THREE.GLTFLoader();
 const modelsPaths = {
   straight: 'models/straight_section.glb',
-  corner: 'models/corner_section.glb'
+  corner: 'models/corner_section.glb',
+  simple: 'models/simple_section.glb'
 };
 
 // Кэш текстур
@@ -480,8 +493,8 @@ function hexStringToNumber(hexStr) {
 }
 
 const COLOR_TYPE_RULES = [
-  { type: 'upholstery', colors: [0x696969, 0x232323, 0x242424] },  //0x393939
-  { type: 'frame', colors: [0x979797, 0xCACACA] },
+  { type: 'upholstery', colors: [0x696969, 0x232323, 0x242424, 0x232323, 0x57A2FF] },  //0x393939
+  { type: 'frame', colors: [0x979797, 0xCACACA, 0x030303] },
 ];
 
 function assignMeshTypes(model) {
@@ -1747,7 +1760,8 @@ function updateUpholsteryPreview() {
 // ===================================================
 const modelDimensions = {
   straight: { width: 650, depth: 650,  height: 710 },
-  corner:   { width: 650, depth: 650, height: 710 }
+  corner:   { width: 650, depth: 650, height: 710 },
+  simple:   { width: 650, depth: 650, height: 460 }
 };
 
 let dimensionsVisible = false;
@@ -2202,6 +2216,8 @@ scene.add(shadowPlane);
   // Добавление секций
   document.getElementById('add-straight').onclick = () => addSection('straight');
   document.getElementById('add-corner').onclick = () => addSection('corner');
+  document.getElementById('add-simple').onclick = () => addSection('simple');
+
 
   document.getElementById('frame-color-black').addEventListener('click', () => {
   if (selectedObject) {
