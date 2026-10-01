@@ -1152,6 +1152,9 @@ function applyUpholsteryTexture(object, category, file) {
   }
 
    let TILE_WORLD = 0.3;
+       if (category === 'moderno') {
+    TILE_WORLD = 0.5;
+  }
   if (category === 'velton') {
     TILE_WORLD = 0.6;
   }
