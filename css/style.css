@@ -171,14 +171,15 @@
 
 /* Сетка кружков вариантов */
 .variant-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;
+  width: 95%;
   margin-top: 10px; justify-items: center;
 }
 .variant-circle {
-  width: 40px; height: 40px; border-radius: 50%; border: 3px solid #ddd;
+  width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ddd;
   cursor: pointer; transition: 0.2s; background-size: cover; background-position: center;
 }
-.variant-circle:hover { transform: scale(1.12); border-color: #96C22B; }
+.variant-circle:hover {border-color: #96C22B; }
 .variant-circle.active { border-color: #96C22B; box-shadow: 0 0 0 2px #96C22B; }
 
 /* Иконка-переключатель */

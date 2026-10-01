@@ -1130,47 +1130,87 @@ function assignMeshTypes(model) {
         texture.needsUpdate = true;
       }
 
-      // Применить текстуру на обивку объекта
-      function applyUpholsteryTexture(object, category, file) {
-        if (category === 'none' || !file) {
-          object.traverse((child) => {
-            if (child.isMesh && child.userData && child.userData.type === 'upholstery') {
-              child.material.map = null;
-              child.material.needsUpdate = true;
-            }
-          });
-          return;
+
+      const normalMapPaths = {
+  velton: 'textures/wellton953 (серый)-normal-1024-16bit (2).png'
+};
+
+function applyUpholsteryTexture(object, category, file) {
+  if (category === 'none' || !file) {
+    object.traverse((child) => {
+      if (child.isMesh && child.userData && child.userData.type === 'upholstery') {
+        child.material.map = null;
+        child.material.normalMap = null;
+        child.material.bumpMap = null;
+        child.material.normalScale = new THREE.Vector2(1, 1);
+        child.material.bumpScale = 0;
+        child.material.needsUpdate = true;
+      }
+    });
+    return;
+  }
+
+   let TILE_WORLD = 0.3;
+  if (category === 'velton') {
+    TILE_WORLD = 0.6;
+  }
+  const normalPath = normalMapPaths[category];
+
+  loadUpholsteryTexture(category, file, (texture) => {
+    if (!texture) {
+      console.error('Текстура не загрузилась:', category, file);
+      return;
+    }
+
+    object.traverse((child) => {
+      if (child.isMesh && child.userData && child.userData.type === 'upholstery') {
+        child.updateMatrixWorld(true);
+        const box = new THREE.Box3().setFromObject(child);
+        const sx = box.max.x - box.min.x;
+        const sy = box.max.y - box.min.y;
+        const sz = box.max.z - box.min.z;
+
+        const dims = [sx, sy, sz].sort((a, b) => b - a);
+        const repU = Math.max(dims[0] / TILE_WORLD, 1);
+        const repV = Math.max(dims[1] / TILE_WORLD, 1);
+
+        // Клонируем диффузную текстуру
+        const tex = texture.clone();
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(repU, repV);
+        tex.offset.set(0, 0);
+        tex.needsUpdate = true;
+
+        child.material = child.material.clone();
+        child.material.map = tex;
+
+        if (normalPath) {
+          // Есть готовая карта нормалей — используем её
+          const normalTex = textureLoader.load(normalPath);
+          normalTex.wrapS = THREE.RepeatWrapping;
+          normalTex.wrapT = THREE.RepeatWrapping;
+          normalTex.repeat.set(repU, repV);
+          normalTex.needsUpdate = true;
+
+          child.material.normalMap = normalTex;
+          child.material.normalScale = new THREE.Vector2(0.3, 0.3);
+          child.material.bumpMap = null;
+        } else {
+          // Нет карты нормалей — используем саму текстуру как bumpMap
+          // Это быстрый вариант: даёт лёгкий рельеф без доп. файлов
+          child.material.bumpMap = tex;
+          child.material.bumpScale = 0.03;
+          child.material.normalMap = null;
         }
 
-        // Желаемый физический размер одного тайла в мировых единицах.
-        // 1 мир.ед. = 100 мм (модель масштабируется ×10, оригинал в см).
-        // 0.3 = 30 мм на тайл — подбери под нужную «крупность» ткани.
-        const TILE_WORLD = 0.3;
-        loadUpholsteryTexture(category, file, (texture) => {
-          object.traverse((child) => {
-            if (child.isMesh && child.userData && child.userData.type === 'upholstery') {
-              // Габариты меша в мировых координатах
-              child.updateMatrixWorld(true);
-              const box = new THREE.Box3().setFromObject(child);
-              const sx = box.max.x - box.min.x;
-              const sy = box.max.y - box.min.y;
-              const sz = box.max.z - box.min.z;
-              // Клонируем текстуру — image общая, repeat/offset свои
-              const tex = texture.clone();
-              tex.needsUpdate = true;
-              // UV нормализованы в 0–1, значит repeat = физический_размер / желаемый_тайл.
-              // Берём две наибольшие оси — они соответствуют U и V развёртки.
-              const dims = [sx, sy, sz].sort((a, b) => b - a);
-              const repU = Math.max(dims[0] / TILE_WORLD, 1);
-              const repV = Math.max(dims[1] / TILE_WORLD, 1);
-              tex.repeat.set(repU, repV);
-              tex.offset.set(0, 0);
-              child.material.map = tex;
-              child.material.needsUpdate = true;
-            }
-          });
-        });
+        child.material.roughness = 0.6;
+        child.material.metalness = 0.0;
+        child.material.needsUpdate = true;
       }
+    });
+  });
+}
 
       // Применить текстуру ко всем объектам сцены
       function applyUpholsteryTextureToAll(category, file) {
