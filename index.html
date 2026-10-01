@@ -1155,6 +1155,9 @@ function applyUpholsteryTexture(object, category, file) {
   if (category === 'velton') {
     TILE_WORLD = 0.6;
   }
+    if (category === 'umbra') {
+    TILE_WORLD = 0.25;
+  }
   const normalPath = normalMapPaths[category];
 
   loadUpholsteryTexture(category, file, (texture) => {
